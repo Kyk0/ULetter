@@ -81,7 +81,7 @@ profile_default/
 ipython_config.py
 
 # Virtual environment
-.env
+../../Library/Application Support/JetBrains/PyCharm2024.2/scratches/.env
 .venv
 env/
 venv/
@@ -164,7 +164,7 @@ web_modules/
 *.tgz
 
 # dotenv environment variable files
-.env
+../../Library/Application Support/JetBrains/PyCharm2024.2/scratches/.env
 .env.development.local
 .env.test.local
 .env.production.local

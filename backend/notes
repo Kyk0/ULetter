@@ -1,0 +1,16 @@
+when you testing api and the response in huge html with no sense
+
+try to make CORS_ALLOW_ALL_ORIGINS
+and
+debug = false
+and
+add to allowed hosts your local, if not yet
+
+in settings
+
+(restore them back after you finished)
+
+
+TODO: stream the chat gpt response instead passing as a string
+TODO: rename text to message all around frontend and on the backend api(view)
+TODO: write more detailed instructions(prompts) to chat gpt

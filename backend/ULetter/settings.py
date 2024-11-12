@@ -23,9 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-!188kwe8j29)8po-gnh&**-3qj+_v(#lr$m&vye)le=4-6#3oc'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-ALLOWED_HOSTS = []
+# turn it false to test api
+DEBUG = False
+
+# changed from blank so
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -39,10 +42,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'users',
+    "corsheaders",
     'text_processing',
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -51,6 +56,17 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# use all the time
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+]
+
+# use when you test api with postman or smth else,
+# or you may just add the another value to the CORS_ALLOWED_ORIGINS instead
+
+# CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'ULetter.urls'
 
