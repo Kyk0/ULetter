@@ -22,4 +22,4 @@ def process_message(request):
 
 
 def get_message_storage(request):
-    print('STORAGE')
+    print('STORAGE') 
