@@ -25,6 +25,7 @@ SECRET_KEY = 'django-insecure-!188kwe8j29)8po-gnh&**-3qj+_v(#lr$m&vye)le=4-6#3oc
 # SECURITY WARNING: don't run with debug turned on in production!
 
 # turn it false to test api
+# turn true to run an admin panel
 DEBUG = False
 
 # changed from blank so
@@ -44,7 +45,21 @@ INSTALLED_APPS = [
     'users',
     "corsheaders",
     'text_processing',
+    'rest_framework_simplejwt',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+}
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
