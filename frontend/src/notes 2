@@ -1,0 +1,3 @@
+TODO: Fix page and reload after log out
+TODO: Fix styles, all styles
+TODO: Add the jwt check before calling the messageEdit(backend api responsible for chat gpt)
