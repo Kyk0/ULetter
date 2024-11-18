@@ -13,11 +13,14 @@ ul {
     margin: 0;
     padding: 0;
     list-style: none;
+    align-items: center;
 }
 
 li {
     font-size: 1rem;
     line-height: 1.5rem;
+    display: flex;
+    align-items: center;
 }
 
 a {
@@ -26,6 +29,7 @@ a {
     font-size: 1rem;
     padding: 0.3rem 0.5rem;
     transition: color 0.2s ease-in-out;
+    display: inline-block;
 }
 
 a:hover {
@@ -41,6 +45,9 @@ button {
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.2s ease-in-out;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 button:hover {
@@ -53,4 +60,17 @@ button:hover {
     justify-content: center;
     min-width: 80px;
     text-align: center;
+}
+
+.nav-logo {
+    font-weight: bold;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }

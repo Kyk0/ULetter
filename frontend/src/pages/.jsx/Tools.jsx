@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from "react-router-dom";
-import { isAuthenticated } from "../services/auth";
+import { isAuthenticated } from "../../services/auth";
 
 const Tools = () => {
     const navigate = useNavigate();

@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import './SignIn.css';
+import React, {useEffect, useState} from 'react';
+import '../.css/SignIn.css';
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import {isAuthenticated} from "../../services/auth";
 
 const SignIn = () => {
     const [isSigningUp, setIsSigningUp] = useState(false);
@@ -9,6 +10,12 @@ const SignIn = () => {
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (isAuthenticated()) {
+            navigate('/')
+        }
+    },[navigate]);
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -18,7 +25,7 @@ const SignIn = () => {
             });
             localStorage.setItem("accessToken", response.data.access);
             localStorage.setItem("refreshToken", response.data.refresh);
-            navigate('/tools');
+            navigate(0);
         } catch {
             alert('Invalid credentials');
         }
