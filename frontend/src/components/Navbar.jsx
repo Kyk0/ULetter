@@ -1,18 +1,21 @@
-import {isAuthenticated, logOut} from '../services/auth';
-import {useEffect, useState} from "react";
-import {NavLink, useNavigate} from "react-router-dom";
-
-import './Navbar.css'
+import React, { useEffect, useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { isAuthenticated, logOut } from "../services/auth";
+import "./Navbar.css";
 
 const Navbar = () => {
-
     const navigate = useNavigate();
-
     const [loggedIn, setLoggedIn] = useState(false);
 
     useEffect(() => {
         setLoggedIn(isAuthenticated());
     }, []);
+
+    const handleLogOut = () => {
+        logOut();
+        setLoggedIn(false);
+        window.location.reload();
+    };
 
     return (
         <nav>
@@ -20,16 +23,16 @@ const Navbar = () => {
                 <li className="nav-logo"><NavLink to="/">ULetter</NavLink></li>
             </ul>
             <ul className="nav-right">
-                <li><NavLink to='/tools'>Tools</NavLink></li>
-                <li><NavLink to='/about'>About</NavLink></li>
-                <li><NavLink to='/contact'>Contact</NavLink></li>
+                <li><NavLink to="/tools">Tools</NavLink></li>
+                <li><NavLink to="/about">About</NavLink></li>
+                <li><NavLink to="/contact">Contact</NavLink></li>
                 {loggedIn ? (
                     <>
                         <li>
                             <div className="nav-profile-btn"><NavLink to="/profile">Profile</NavLink></div>
                         </li>
                         <li>
-                            <button className="nav-logout-btn" onClick={logOut}>Log Out</button>
+                            <button className="nav-logout-btn" onClick={handleLogOut}>Log Out</button>
                         </li>
                     </>
                 ) : (
@@ -40,13 +43,10 @@ const Navbar = () => {
                             </button>
                         </li>
                     </>
-                )
-
-                }
+                )}
             </ul>
-
         </nav>
-    )
-}
+    );
+};
 
 export default Navbar;

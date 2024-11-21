@@ -1,12 +1,12 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import About from './pages/About';
-import Contact from './pages/Contact';
-import Home from './pages/Home';
-import MessageEdit from './pages/MessageEdit';
-import Profile from './pages/Profile';
-import SignIn from './pages/SignIn';
-import Tools from './pages/Tools';
+import About from './pages/.jsx/About';
+import Contact from './pages/.jsx/Contact';
+import Home from './pages/.jsx/Home';
+import MessageEdit from './pages/.jsx/MessageEdit';
+import Profile from './pages/.jsx/Profile';
+import SignIn from './pages/.jsx/SignIn';
+import Tools from './pages/.jsx/Tools';
 import Navbar from "./components/Navbar";
 
 const App = () => {

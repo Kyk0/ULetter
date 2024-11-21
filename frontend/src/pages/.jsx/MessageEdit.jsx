@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
-import './MessageEdit.css';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
+import { isAuthenticated } from "../../services/auth";
+import '../.css/MessageEdit.css';
 
 function MessageEdit() {
     const [inputText, setInputText] = useState("");
@@ -8,6 +10,14 @@ function MessageEdit() {
     const [messageType, setMessageType] = useState("chat");
     const [tone, setTone] = useState("semi-formal");
     const [loading, setLoading] = useState(false);
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!isAuthenticated()) {
+            navigate('/sign-in');
+        }
+    }, [navigate]);
 
     const handleModeChange = (e) => setMode(e.target.value);
     const handleMessageTypeChange = (e) => {
@@ -19,6 +29,12 @@ function MessageEdit() {
     const handleClearText = () => setInputText("");
 
     const handleSendRequest = () => {
+        if (!isAuthenticated()) {
+            alert("You must be logged in to perform this action.");
+            navigate('/sign-in');
+            return;
+        }
+
         setLoading(true);
         const url = 'http://127.0.0.1:8000/api/process-message/';
         const params = new URLSearchParams({
