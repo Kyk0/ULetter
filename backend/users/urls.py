@@ -1,13 +1,24 @@
 from django.urls import path
 from rest_framework_simplejwt.views import TokenRefreshView
 from rest_framework_simplejwt.views import TokenVerifyView
-from .views import SignupView, LoginView, LogoutView
 
+from .serializers import UserProfileChangePasswordSerializer
+from .views import (SignupView,
+                    LoginView,
+                    LogoutView,
+                    UserProfileView,
+                    UserProfileUpdateView,
+                    UserProfileChangePasswordView,
+                    UserAccountDeactivationView,)
 
 urlpatterns = [
     path('signup/', SignupView.as_view(), name='signup'),
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
+    path('profile/', UserProfileView.as_view(), name='profile'),
+    path('profile/update/', UserProfileUpdateView.as_view(), name='profile-update'),
+    path('profile/change-password', UserProfileChangePasswordView.as_view(), name='password-change'),
+    path('profile/deactivate/', UserAccountDeactivationView.as_view(), name='deactivate'),
     path('token/', TokenRefreshView.as_view(), name='token'),
     path('token/verify/', TokenVerifyView.as_view(), name='token-verify'),
 ]
