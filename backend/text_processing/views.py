@@ -19,7 +19,3 @@ def process_message(request):
             return JsonResponse({"error": str(e)}, status=500)
 
     return JsonResponse({"error": "Only GET requests are allowed."}, status=405)
-
-
-def get_message_storage(request):
-    print('STORAGE') 

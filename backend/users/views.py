@@ -1,47 +1,48 @@
-from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.status import HTTP_201_CREATED
+from rest_framework.views import APIView
 from rest_framework import status
-from django.contrib.auth.models import User
-from django.contrib.auth import authenticate
+from .serializers import SignupSerializer, LoginSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.exceptions import TokenError
 
-class RegisterView(APIView):
-    def get(self, request):
-        username = request.GET.get("username")
-        password = request.GET.get("password")
-        email = request.GET.get("email")
-        if not all([username, password, email]):
-            return Response({"error": "All parameters (username, password, email) are required."}, status=status.HTTP_400_BAD_REQUEST)
-        if User.objects.filter(username=username).exists():
-            return Response({"error": "Username already exists"}, status=status.HTTP_400_BAD_REQUEST)
-        user = User.objects.create_user(username=username, password=password, email=email)
-        user.save()
-        return Response({"message": "User registered successfully"}, status=status.HTTP_201_CREATED)
+class SignupView(APIView):
+    def post(self, request):
+        serializer = SignupSerializer(data=request.data)
+        if serializer.is_valid():
+            user = serializer.save()
+            refresh = RefreshToken.for_user(user)
+            return Response({
+                'access': str(refresh.access_token),
+                'refresh': str(refresh),
+            }, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class LoginView(APIView):
-    def get(self, request):
-        username = request.GET.get("username")
-        password = request.GET.get("password")
-        if not all([username, password]):
-            return Response({"error": "Both username and password are required."}, status=status.HTTP_400_BAD_REQUEST)
-        user = authenticate(username=username, password=password)
-        if user is None:
-            return Response({"error": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
-        refresh = RefreshToken.for_user(user)
-        return Response({
-            "refresh": str(refresh),
-            "access": str(refresh.access_token),
-        })
+    def post(self, request):
+        serializer = LoginSerializer(data=request.data)
+        if serializer.is_valid():
+            user = serializer.validated_data['user']
+            refresh = RefreshToken.for_user(user)
+            return Response({
+                'access': str(refresh.access_token),
+                'refresh': str(refresh),
+            }, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class ValidateTokenView(APIView):
-    permission_classes = [IsAuthenticated]
-    def get(self, request):
-        user = request.user
-        return Response({
-            "message": "Token is valid. User is logged in.",
-            "user": {
-                "username": user.username,
-                "email": user.email,
-            }
-        })
+
+class LogoutView(APIView):
+    def post(self, request):
+        token_string = request.data.get('token')
+        if not token_string:
+            return Response({"message": "Token is missing."}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            token = RefreshToken(token_string)
+            token.blacklist()
+            return Response({"message": "Token successfully blacklisted."}, status=status.HTTP_200_OK)
+        except TokenError:
+            return Response({"message": "Token is already blacklisted."}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"message": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
