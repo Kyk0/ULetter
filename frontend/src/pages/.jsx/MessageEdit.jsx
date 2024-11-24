@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { isAuthenticated } from "../../services/auth";
-import '../.css/MessageEdit.css';
+import '../../MessageEdit.css';
 
 function MessageEdit() {
     const [inputText, setInputText] = useState("");

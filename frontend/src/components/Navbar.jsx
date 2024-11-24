@@ -1,52 +1,26 @@
-import React, { useEffect, useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
-import { isAuthenticated, logOut } from "../services/auth";
-import "./Navbar.css";
+import React from "react";
+import { NavLink } from "react-router-dom";
+import '../index.css';
 
 const Navbar = () => {
-    const navigate = useNavigate();
-    const [loggedIn, setLoggedIn] = useState(false);
-
-    useEffect(() => {
-        setLoggedIn(isAuthenticated());
-    }, []);
-
-    const handleLogOut = () => {
-        logOut();
-        setLoggedIn(false);
-        window.location.reload();
-    };
-
     return (
-        <nav>
-            <ul className="nav-left">
-                <li className="nav-logo"><NavLink to="/">ULetter</NavLink></li>
-            </ul>
-            <ul className="nav-right">
-                <li><NavLink to="/tools">Tools</NavLink></li>
-                <li><NavLink to="/about">About</NavLink></li>
-                <li><NavLink to="/contact">Contact</NavLink></li>
-                {loggedIn ? (
-                    <>
-                        <li>
-                            <div className="nav-profile-btn"><NavLink to="/profile">Profile</NavLink></div>
-                        </li>
-                        <li>
-                            <button className="nav-logout-btn" onClick={handleLogOut}>Log Out</button>
-                        </li>
-                    </>
-                ) : (
-                    <>
-                        <li>
-                            <button className="nav-login-btn" onClick={() => navigate("/sign-in")}>
-                                Sign in
-                            </button>
-                        </li>
-                    </>
-                )}
-            </ul>
-        </nav>
-    );
-};
+        <div className="bg-background  font-mono">
+            <div className="flex items-center justify-between max-w-screen-xl mx-auto py-5 px-5 sm:px-10">
+                <div className="text-2xl font-bold text-text">
+                    <NavLink to="/" className="hover:text-accent transition-colors duration-300 ease-in-out">ULetter</NavLink>
+                </div>
+                <ul className="list-none flex space-x-6 text-text">
+                    <li><NavLink to="/tools" className="px-4 py-2 hover:text-accent transition-colors duration-300 ease-in-out">Tools</NavLink></li>
+                    <li><NavLink to="/about" className="px-4 py-2 hover:text-accent transition-colors duration-300 ease-in-out">About</NavLink></li>
+                    <li><NavLink to="/contact" className="px-4 py-2 hover:text-accent transition-colors duration-300 ease-in-out">Contact</NavLink></li>
+                </ul>
+                <div className="flex items-center justify-between space-x-3">
+                    <NavLink to="/signin" className="px-4 py-2 text-text hover:text-accent transition-colors duration-300 ease-in-out">Log in</NavLink>
+                    <NavLink to="/signup" className="px-4 py-2 bg-primary text-white rounded hover:bg-accent shadow-md hover:shadow-lg transition-all duration-300 ease-in-out">Sign up</NavLink>
+                </div>
+            </div>
+        </div>
+    )
+}
 
 export default Navbar;
