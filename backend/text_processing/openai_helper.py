@@ -6,7 +6,13 @@ dotenv_path = find_dotenv()
 load_dotenv(dotenv_path)
 
 
-def chatgpt_api_call(message, mode, message_type, tone):
+def chatgpt_api_call(message, parameters, mode="create"):
+    if not isinstance(parameters, dict):
+        raise ValueError("Parameters must be a dictionary.")
+
+    message_type = parameters.get("message_type")
+    tone = parameters.get("tone")
+
     client = OpenAI()
 
     style_overview = (
@@ -23,24 +29,14 @@ def chatgpt_api_call(message, mode, message_type, tone):
     )
 
     tone_descriptions = {
-        "professional": (
-            "Use a formal, respectful, and concise style with precise language. Avoid colloquialisms, and ensure it is suitable for business or official communication."
-        ),
-        "semi-formal": (
-            "Use a polite and approachable tone. Balance formality and warmth, making it suitable for professional yet friendly communication, often used in emails to acquaintances or less formal business contexts."
-        ),
-        "informal": (
-            "Use a casual and friendly tone, suitable for personal chats or messages to close acquaintances. Keep it relaxed and approachable, with language that feels natural and spontaneous."
-        )
+        "professional": "Use a formal, respectful, and concise style with precise language. Avoid colloquialisms, and ensure it is suitable for business or official communication.",
+        "semi-formal": "Use a polite and approachable tone. Balance formality and warmth, making it suitable for professional yet friendly communication, often used in emails to acquaintances or less formal business contexts.",
+        "informal": "Use a casual and friendly tone, suitable for personal chats or messages to close acquaintances. Keep it relaxed and approachable, with language that feels natural and spontaneous."
     }
 
     message_type_instructions = {
-        "email": (
-            "Format the content to suit an email. Ensure appropriate salutations and closings, and maintain a structured, coherent flow suitable for email communication."
-        ),
-        "chat": (
-            "Format the content to suit a chat message. Keep the structure conversational and concise, focusing on immediacy and clarity for quick reading."
-        )
+        "email": "Format the content to suit an email. Ensure appropriate salutations and closings, and maintain a structured, coherent flow suitable for email communication.",
+        "chat": "Format the content to suit a chat message. Keep the structure conversational and concise, focusing on immediacy and clarity for quick reading."
     }
 
     system_content = (
@@ -63,5 +59,4 @@ def chatgpt_api_call(message, mode, message_type, tone):
         stream=False
     )
 
-    text = response.choices[0].message.content
-    return text
+    return response.choices[0].message.content
