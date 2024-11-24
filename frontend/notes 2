@@ -1,4 +1,1 @@
 TODO: Fix styles, all styles
-TODO: Add so called "context something"; that's centralized state management; ganna use for auth
-
-NOTE: If user logged in, the sign in page is redirects to home ('/')

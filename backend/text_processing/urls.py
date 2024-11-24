@@ -1,7 +1,6 @@
 from django.urls import path
-from . import views
+from .views import EditMessageView
 
 urlpatterns = [
-    path('api/process-message/', views.process_message, name='process_message'),
-    path('api/message_store/', views.get_message_storage, name='message_store'),
+    path('edit-message/', EditMessageView.as_view() , name='process_message'),
 ]
