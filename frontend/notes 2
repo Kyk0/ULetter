@@ -1,1 +1,4 @@
-TODO: Fix styles, all styles
+TODO: finish navbar for logged in user
+TODO: add context auth state management
+TODO: add log in and sign up pages instead sign in
+TODO: make profile
