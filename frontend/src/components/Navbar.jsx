@@ -19,12 +19,12 @@ const Navbar = () => {
                 </div>
 
                 <div className="absolute right-0 flex items-center space-x-3">
-                    <NavLink to="/signin" className="px-4 py-2 text-text hover:text-accent transition-colors duration-300 ease-in-out">Log in</NavLink>
+                    <NavLink to="/login" className="px-4 py-2 text-text hover:text-accent transition-colors duration-300 ease-in-out">Log in</NavLink>
                     <NavLink to="/signup" className="px-4 py-2 bg-primary text-white rounded hover:bg-accent shadow-md hover:shadow-lg transition-all duration-300 ease-in-out">Sign up</NavLink>
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default Navbar;
