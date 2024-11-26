@@ -1,6 +1,7 @@
+# serializers.py
 from rest_framework import serializers
 from .models import EditMessageHistory
-from .openai_helper import chatgpt_api_call
+from .openai_helper import OpenAIHelper
 
 class EditMessageSerializer(serializers.ModelSerializer):
     request = serializers.CharField(required=True, allow_null=False, allow_blank=False)
@@ -13,10 +14,14 @@ class EditMessageSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         try:
             parameters_dict = dict(attrs['parameters'])
-            response = chatgpt_api_call(attrs['request'], parameters_dict)
+            response = OpenAIHelper.chatgpt_api_call(attrs['request'], parameters_dict)
             attrs['response'] = response
+        except ValueError as ve:
+            raise serializers.ValidationError({"parameters": str(ve)})
+        except RuntimeError as re:
+            raise serializers.ValidationError({"response": str(re)})
         except Exception as e:
-            raise serializers.ValidationError({"response": f"ChatGPT API call failed: {str(e)}"})
+            raise serializers.ValidationError({"response": f"Unexpected error: {str(e)}"})
         return attrs
 
     def create(self, validated_data):
