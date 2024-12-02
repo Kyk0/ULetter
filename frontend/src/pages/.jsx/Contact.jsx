@@ -42,11 +42,11 @@ function Contact() {
         </div>
         <div style={styles.infoRow}>
           <FontAwesomeIcon icon={faPhone} style={styles.icon} />
-          <p style={styles.text}>Phone: +1 234 567 890</p>
+          <p style={styles.text}>Phone: +370 234 567 890</p>
         </div>
         <div style={styles.infoRow}>
           <FontAwesomeIcon icon={faMapMarkerAlt} style={styles.icon} />
-          <p style={styles.text}>Address: 1234 ULetter St, Tech City, USA</p>
+          <p style={styles.text}>Address: 1234 ULetter St, Kaunas, Lithuania</p>
         </div>
       </div>
 
@@ -113,8 +113,8 @@ function Contact() {
               onChange={(e) => setFeedback(e.target.value)}
               placeholder="Write your feedback here..."
               required
-              spellCheck={true} // Enables spellcheck
-              lang="en" // Sets English as the language for spellcheck
+              spellCheck={true} 
+              lang="en" 
             />
             <button type="submit" style={styles.submitButton}>
               Submit
