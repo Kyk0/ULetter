@@ -1,9 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPhone, faMapMarkerAlt, faClock, faEnvelope, faCalendarAlt, faHourglassHalf } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPhone,
+  faMapMarkerAlt,
+  faClock,
+  faEnvelope,
+  faCalendarAlt,
+  faStopwatch,
+} from "@fortawesome/free-solid-svg-icons";
 import { faFacebook, faTwitter } from "@fortawesome/free-brands-svg-icons";
 
 function Contact() {
+  const [showFeedbackForm, setShowFeedbackForm] = useState(false);
+  const [feedback, setFeedback] = useState("");
+
+  const handleFeedbackSubmit = (e) => {
+    e.preventDefault();
+    alert(`Thank you for your feedback: "${feedback}"`);
+    setFeedback("");
+    setShowFeedbackForm(false); // Hide the form after submission
+  };
+
   return (
     <div style={styles.page}>
       <h1 style={styles.title}>Contact Us</h1>
@@ -42,15 +59,15 @@ function Contact() {
           </p>
         </div>
         <div style={styles.infoRow}>
-          <FontAwesomeIcon icon={faHourglassHalf} style={styles.icon} />
-          <p style={styles.text}>
-            Estimated Response Time: Within 24 hours (on business days)
-          </p>
-        </div>
-        <div style={styles.infoRow}>
           <FontAwesomeIcon icon={faCalendarAlt} style={styles.icon} />
           <p style={styles.text}>
             Holiday Schedule: Limited support on public holidays
+          </p>
+        </div>
+        <div style={styles.infoRow}>
+          <FontAwesomeIcon icon={faStopwatch} style={styles.icon} />
+          <p style={styles.text}>
+            Estimated Response Time: Within 24 hours (on business days)
           </p>
         </div>
       </div>
@@ -76,15 +93,35 @@ function Contact() {
             <FontAwesomeIcon icon={faTwitter} style={styles.buttonIcon} />
             Twitter
           </a>
-          <a
-            href="/feedback"
+          <button
             style={styles.button}
+            onClick={() => setShowFeedbackForm(!showFeedbackForm)}
           >
             <FontAwesomeIcon icon={faEnvelope} style={styles.buttonIcon} />
             Feedback
-          </a>
+          </button>
         </div>
       </div>
+
+      {showFeedbackForm && (
+        <div style={styles.feedbackForm}>
+          <h3 style={styles.feedbackHeading}>We value your feedback</h3>
+          <form onSubmit={handleFeedbackSubmit}>
+            <textarea
+              style={styles.feedbackTextarea}
+              value={feedback}
+              onChange={(e) => setFeedback(e.target.value)}
+              placeholder="Write your feedback here..."
+              required
+              spellCheck={true} // Enables spellcheck
+              lang="en" // Sets English as the language for spellcheck
+            />
+            <button type="submit" style={styles.submitButton}>
+              Submit
+            </button>
+          </form>
+        </div>
+      )}
     </div>
   );
 }
@@ -168,14 +205,41 @@ const styles = {
     marginRight: "8px",
     fontSize: "1.2rem",
   },
+  feedbackForm: {
+    marginTop: "20px",
+    padding: "15px",
+    borderRadius: "10px",
+    backgroundColor: "#f9f9f9",
+    border: "1px solid #ddd",
+    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.05)",
+  },
+  feedbackHeading: {
+    fontSize: "1.5rem",
+    marginBottom: "10px",
+    color: "#2c3e50",
+  },
+  feedbackTextarea: {
+    width: "100%",
+    height: "100px",
+    padding: "10px",
+    fontSize: "1rem",
+    borderRadius: "5px",
+    border: "1px solid #ddd",
+    marginBottom: "10px",
+    resize: "none",
+  },
+  submitButton: {
+    padding: "10px 20px",
+    fontSize: "1rem",
+    fontWeight: "bold",
+    color: "#ffffff",
+    backgroundColor: "#0073e6",
+    border: "none",
+    borderRadius: "5px",
+    cursor: "pointer",
+    transition: "background-color 0.3s",
+  },
 };
 
 export default Contact;
-
-
-
-
-
-
-
 
