@@ -11,6 +11,8 @@ import Signup from './pages/.jsx/SignIn';
 import MinimalNavbar from "./components/MinimalNavbar";
 import SignIn from "./pages/.jsx/SignIn";
 
+
+
 const App = () => {
     return (
         <Router>
