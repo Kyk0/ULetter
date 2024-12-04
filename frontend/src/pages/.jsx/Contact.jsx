@@ -10,7 +10,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faFacebook, faTwitter } from "@fortawesome/free-brands-svg-icons";
 
-function Contact() {
+const Contact = () => {
   const [showFeedbackForm, setShowFeedbackForm] = useState(false);
   const [feedback, setFeedback] = useState("");
 
@@ -18,105 +18,103 @@ function Contact() {
     e.preventDefault();
     alert(`Thank you for your feedback: "${feedback}"`);
     setFeedback("");
-    setShowFeedbackForm(false); // Hide the form after submission
+    setShowFeedbackForm(false);
   };
 
   return (
-    <div style={styles.page}>
-      <h1 style={styles.title}>Contact Us</h1>
+    <div className="bg-background text-text max-w-4xl mx-auto p-8 rounded-lg shadow-lg border border-gray-200">
+      <h1 className="text-4xl font-bold text-center mb-6">Contact Us</h1>
 
-      <div style={styles.section}>
-        <h2 style={styles.heading}>Contact Information</h2>
-        <div style={styles.infoRow}>
-          <FontAwesomeIcon icon={faEnvelope} style={styles.icon} />
-          <p style={styles.text}>
+      {/* Contact Information Section */}
+      <div className="mb-8 p-6 bg-white rounded-lg shadow border border-gray-200">
+        <h2 className="text-2xl font-semibold text-primary border-b pb-2 mb-4">Contact Information</h2>
+        <div className="flex items-center mb-4">
+          <FontAwesomeIcon icon={faEnvelope} className="text-primary text-xl mr-4" />
+          <p>
             Email:{" "}
             <a
               href="mailto:support@uletter.com"
-              style={styles.link}
-              title="Send an email to support@uletter.com"
+              className="text-secondary hover:underline font-medium"
             >
               support@uletter.com
             </a>
           </p>
         </div>
-        <div style={styles.infoRow}>
-          <FontAwesomeIcon icon={faPhone} style={styles.icon} />
-          <p style={styles.text}>Phone: +370 234 567 890</p>
+        <div className="flex items-center mb-4">
+          <FontAwesomeIcon icon={faPhone} className="text-primary text-xl mr-4" />
+          <p>Phone: +370 234 567 890</p>
         </div>
-        <div style={styles.infoRow}>
-          <FontAwesomeIcon icon={faMapMarkerAlt} style={styles.icon} />
-          <p style={styles.text}>Address: 1234 ULetter St, Kaunas, Lithuania</p>
-        </div>
-      </div>
-
-      <div style={styles.section}>
-        <h2 style={styles.heading}>Support Details</h2>
-        <div style={styles.infoRow}>
-          <FontAwesomeIcon icon={faClock} style={styles.icon} />
-          <p style={styles.text}>
-            Working Hours: Mon-Fri, 9:00 AM - 5:00 PM
-          </p>
-        </div>
-        <div style={styles.infoRow}>
-          <FontAwesomeIcon icon={faCalendarAlt} style={styles.icon} />
-          <p style={styles.text}>
-            Holiday Schedule: Limited support on public holidays
-          </p>
-        </div>
-        <div style={styles.infoRow}>
-          <FontAwesomeIcon icon={faStopwatch} style={styles.icon} />
-          <p style={styles.text}>
-            Estimated Response Time: Within 24 hours (on business days)
-          </p>
+        <div className="flex items-center">
+          <FontAwesomeIcon icon={faMapMarkerAlt} className="text-primary text-xl mr-4" />
+          <p>Address: 1234 ULetter St, Kaunas, Lithuania</p>
         </div>
       </div>
 
-      <div style={styles.section}>
-        <h2 style={styles.heading}>Connect With Us</h2>
-        <div style={styles.buttonGroup}>
+      {/* Support Details Section */}
+      <div className="mb-8 p-6 bg-white rounded-lg shadow border border-gray-200">
+        <h2 className="text-2xl font-semibold text-primary border-b pb-2 mb-4">Support Details</h2>
+        <div className="flex items-center mb-4">
+          <FontAwesomeIcon icon={faClock} className="text-primary text-xl mr-4" />
+          <p>Working Hours: Mon-Fri, 9:00 AM - 5:00 PM</p>
+        </div>
+        <div className="flex items-center mb-4">
+          <FontAwesomeIcon icon={faCalendarAlt} className="text-primary text-xl mr-4" />
+          <p>Holiday Schedule: Limited support on public holidays</p>
+        </div>
+        <div className="flex items-center">
+          <FontAwesomeIcon icon={faStopwatch} className="text-primary text-xl mr-4" />
+          <p>Estimated Response Time: Within 24 hours (on business days)</p>
+        </div>
+      </div>
+
+      {/* Connect With Us Section */}
+      <div className="mb-8 p-6 bg-white rounded-lg shadow border border-gray-200">
+        <h2 className="text-2xl font-semibold text-primary border-b pb-2 mb-4">Connect With Us</h2>
+        <div className="flex gap-4">
           <a
             href="https://facebook.com/uletter"
-            style={styles.button}
+            className="flex items-center justify-center bg-blue-600 text-white px-4 py-2 rounded shadow hover:bg-blue-700 transition"
             target="_blank"
             rel="noreferrer"
           >
-            <FontAwesomeIcon icon={faFacebook} style={styles.buttonIcon} />
+            <FontAwesomeIcon icon={faFacebook} className="mr-2" />
             Facebook
           </a>
           <a
             href="https://twitter.com/uletter"
-            style={styles.button}
+            className="flex items-center justify-center bg-blue-400 text-white px-4 py-2 rounded shadow hover:bg-blue-500 transition"
             target="_blank"
             rel="noreferrer"
           >
-            <FontAwesomeIcon icon={faTwitter} style={styles.buttonIcon} />
+            <FontAwesomeIcon icon={faTwitter} className="mr-2" />
             Twitter
           </a>
           <button
-            style={styles.button}
+            className="flex items-center justify-center bg-primary text-white px-4 py-2 rounded shadow hover:bg-secondary transition"
             onClick={() => setShowFeedbackForm(!showFeedbackForm)}
           >
-            <FontAwesomeIcon icon={faEnvelope} style={styles.buttonIcon} />
+            <FontAwesomeIcon icon={faEnvelope} className="mr-2" />
             Feedback
           </button>
         </div>
       </div>
 
+      {/* Feedback Form */}
       {showFeedbackForm && (
-        <div style={styles.feedbackForm}>
-          <h3 style={styles.feedbackHeading}>We value your feedback</h3>
+        <div className="p-6 bg-gray-50 rounded-lg shadow border border-gray-200 mt-4">
+          <h3 className="text-xl font-bold mb-4 text-primary">We value your feedback</h3>
           <form onSubmit={handleFeedbackSubmit}>
             <textarea
-              style={styles.feedbackTextarea}
+              className="w-full p-3 rounded border border-gray-300 mb-4 resize-none"
               value={feedback}
               onChange={(e) => setFeedback(e.target.value)}
               placeholder="Write your feedback here..."
               required
-              spellCheck={true} 
-              lang="en" 
             />
-            <button type="submit" style={styles.submitButton}>
+            <button
+              type="submit"
+              className="px-4 py-2 bg-primary text-white font-bold rounded shadow hover:bg-secondary transition"
+            >
               Submit
             </button>
           </form>
@@ -124,122 +122,6 @@ function Contact() {
       )}
     </div>
   );
-}
-
-const styles = {
-  page: {
-    fontFamily: "'Roboto', Arial, sans-serif",
-    padding: "30px",
-    backgroundColor: "#f9f9f9",
-    borderRadius: "10px",
-    maxWidth: "800px",
-    margin: "50px auto",
-    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-    border: "1px solid #e0e0e0",
-  },
-  title: {
-    textAlign: "center",
-    color: "#333",
-    fontSize: "2.5rem",
-    marginBottom: "30px",
-    fontWeight: "bold",
-  },
-  section: {
-    margin: "20px 0",
-    padding: "20px",
-    borderRadius: "10px",
-    backgroundColor: "#ffffff",
-    border: "1px solid #ddd",
-    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.05)",
-  },
-  heading: {
-    color: "#2c3e50",
-    fontSize: "1.8rem",
-    marginBottom: "15px",
-    borderBottom: "2px solid #e0e0e0",
-    paddingBottom: "10px",
-  },
-  infoRow: {
-    display: "flex",
-    alignItems: "center",
-    marginBottom: "15px",
-  },
-  icon: {
-    fontSize: "1.5rem",
-    marginRight: "10px",
-    color: "#555",
-  },
-  text: {
-    margin: 0,
-    fontSize: "1.1rem",
-    color: "#555",
-  },
-  link: {
-    color: "#0073e6",
-    textDecoration: "none",
-    fontWeight: "500",
-  },
-  buttonGroup: {
-    display: "flex",
-    gap: "10px",
-    justifyContent: "flex-start",
-    marginTop: "10px",
-  },
-  button: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: "8px 15px",
-    fontSize: "0.9rem",
-    fontWeight: "bold",
-    color: "#ffffff",
-    backgroundColor: "#000000",
-    border: "none",
-    borderRadius: "5px",
-    textDecoration: "none",
-    transition: "background-color 0.3s",
-    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-    cursor: "pointer",
-  },
-  buttonIcon: {
-    marginRight: "8px",
-    fontSize: "1.2rem",
-  },
-  feedbackForm: {
-    marginTop: "20px",
-    padding: "15px",
-    borderRadius: "10px",
-    backgroundColor: "#f9f9f9",
-    border: "1px solid #ddd",
-    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.05)",
-  },
-  feedbackHeading: {
-    fontSize: "1.5rem",
-    marginBottom: "10px",
-    color: "#2c3e50",
-  },
-  feedbackTextarea: {
-    width: "100%",
-    height: "100px",
-    padding: "10px",
-    fontSize: "1rem",
-    borderRadius: "5px",
-    border: "1px solid #ddd",
-    marginBottom: "10px",
-    resize: "none",
-  },
-  submitButton: {
-    padding: "10px 20px",
-    fontSize: "1rem",
-    fontWeight: "bold",
-    color: "#ffffff",
-    backgroundColor: "#0073e6",
-    border: "none",
-    borderRadius: "5px",
-    cursor: "pointer",
-    transition: "background-color 0.3s",
-  },
 };
 
 export default Contact;
-
