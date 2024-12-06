@@ -1,11 +1,13 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
-from .serializers import SignupSerializer, LoginSerializer, UserProfileUpdateSerializer, UserProfileChangePasswordSerializer
+from .serializers import SignupSerializer, LoginSerializer, UserProfileUpdateSerializer, \
+    UserProfileChangePasswordSerializer, UserProfileMessageHistorySerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated
+from .models import MessageHistory
 
 class SignupView(APIView):
     def post(self, request):
@@ -120,3 +122,16 @@ class UserAccountDeactivationView(APIView):
                 pass
 
         return Response({"message": "Your account has been deactivated,  all tokens have been blacklisted."}, status=status.HTTP_200_OK)
+
+class UserProfileMessageHistory(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        try:
+            user = request.user
+            message_history = MessageHistory.objects.filter(user=user).order_by('-timestamp')
+            serializer = UserProfileMessageHistorySerializer(message_history, many=True)
+            return Response({"message_history": serializer.data},status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"error": str(e)},status=status.HTTP_500_INTERNAL_SERVER_ERROR)

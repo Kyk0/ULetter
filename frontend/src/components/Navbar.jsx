@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
+import { AuthContext } from "../services/AuthContext";
 
 const Navbar = () => {
+    const { isLoggedIn, logoutUser } = useContext(AuthContext);
+
     return (
         <div className="bg-background font-mono fixed top-0 left-0 w-full z-10 h-16">
             <div className="flex items-center max-w-screen-xl mx-auto py-5 px-5 sm:px-10 relative">
@@ -44,18 +47,37 @@ const Navbar = () => {
                 </div>
 
                 <div className="absolute right-0 flex items-center space-x-3">
-                    <NavLink
-                        to="/signin?type=login"
-                        className="px-4 py-2 text-text hover:text-accent transition-colors duration-300 ease-in-out"
-                    >
-                        Log in
-                    </NavLink>
-                    <NavLink
-                        to="/signin?type=signup"
-                        className="px-4 py-2 bg-primary text-white rounded hover:bg-accent shadow-md hover:shadow-lg transition-all duration-300 ease-in-out"
-                    >
-                        Sign up
-                    </NavLink>
+                    {isLoggedIn() ? (
+                        <>
+                            <NavLink
+                                to="/profile"
+                                className="px-4 py-2 text-text hover:text-accent transition-colors duration-300 ease-in-out"
+                            >
+                                Profile
+                            </NavLink>
+                            <button
+                                onClick={logoutUser}
+                                className="px-4 py-2 bg-primary text-white rounded hover:bg-accent shadow-md hover:shadow-lg transition-all duration-300 ease-in-out"
+                            >
+                                Logout
+                            </button>
+                        </>
+                    ) : (
+                        <>
+                            <NavLink
+                                to="/signin?type=login"
+                                className="px-4 py-2 text-text hover:text-accent transition-colors duration-300 ease-in-out"
+                            >
+                                Log in
+                            </NavLink>
+                            <NavLink
+                                to="/signin?type=signup"
+                                className="px-4 py-2 bg-primary text-white rounded hover:bg-accent shadow-md hover:shadow-lg transition-all duration-300 ease-in-out"
+                            >
+                                Sign up
+                            </NavLink>
+                        </>
+                    )}
                 </div>
             </div>
         </div>

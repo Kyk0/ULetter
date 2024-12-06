@@ -1,17 +1,18 @@
-import React from "react";
-import {BrowserRouter as Router, Routes, Route, useLocation} from "react-router-dom";
-import About from './pages/.jsx/About';
-import Contact from './pages/.jsx/Contact';
-import Home from './pages/.jsx/Home';
-import MessageEdit from './pages/.jsx/MessageEdit';
-import Profile from './pages/.jsx/Profile';
-import Tools from './pages/.jsx/Tools';
+import React, { useContext } from "react";
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from "react-router-dom";
+import About from './components/About';
+import Contact from './components/Contact';
+import Home from './components/Home';
+import Profile from './components/Profile';
+import Tools from './components/Tools';
 import Navbar from "./components/Navbar";
-import Signup from './pages/.jsx/SignIn';
 import MinimalNavbar from "./components/MinimalNavbar";
-import SignIn from "./pages/.jsx/SignIn";
+import SignIn from "./components/SignIn";
+import { AuthContext } from "./services/AuthContext";
 
 const App = () => {
+    const { isLoggedIn } = useContext(AuthContext);
+
     return (
         <Router>
             <Layout>
@@ -19,8 +20,12 @@ const App = () => {
                     <Route path="/" element={<Home />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/contact" element={<Contact />} />
-                    <Route path="/message-edit" element={<MessageEdit />} />
-                    <Route path="/profile" element={<Profile />} />
+                    <Route
+                        path="/profile"
+                        element={
+                            isLoggedIn() ? <Profile /> : <Navigate to="/signin?type=login" />
+                        }
+                    />
                     <Route path="/tools" element={<Tools />} />
                     <Route path="/signin" element={<SignIn />} />
                 </Routes>
@@ -36,9 +41,7 @@ const Layout = ({ children }) => {
 
     return (
         <div className="min-h-screen bg-background flex flex-col">
-
             {isMinimalNavbar ? <MinimalNavbar /> : <Navbar />}
-
             <main className={`flex-grow ${isMinimalNavbar ? "pt-16" : "pt-16"}`}>
                 {children}
             </main>

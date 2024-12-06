@@ -2,6 +2,7 @@ from rest_framework import serializers
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import check_password
+from .models import MessageHistory
 
 
 class SignupSerializer(serializers.ModelSerializer):
@@ -97,4 +98,9 @@ class UserProfileChangePasswordSerializer(serializers.Serializer):
         user.set_password(self.validated_data.get('new_password'))
         user.save()
         return user
+
+class UserProfileMessageHistorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MessageHistory
+        fields = ['request', 'parameters', 'response', 'timestamp']
 
