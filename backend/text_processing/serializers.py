@@ -1,6 +1,6 @@
 # serializers.py
 from rest_framework import serializers
-from .models import EditMessageHistory
+from users.models import MessageHistory
 from .openai_helper import OpenAIHelper
 
 class EditMessageSerializer(serializers.ModelSerializer):
@@ -8,7 +8,7 @@ class EditMessageSerializer(serializers.ModelSerializer):
     parameters = serializers.JSONField(required=True, allow_null=False)
 
     class Meta:
-        model = EditMessageHistory
+        model = MessageHistory
         fields = ('request', 'parameters')
 
     def validate(self, attrs):
@@ -26,7 +26,7 @@ class EditMessageSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = self.context.get('request').user
-        return EditMessageHistory.objects.create(
+        return MessageHistory.objects.create(
             request=validated_data['request'],
             parameters=validated_data['parameters'],
             response=validated_data['response'],
