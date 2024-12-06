@@ -22,7 +22,7 @@ const Contact = () => {
   };
 
   return (
-    <div className="bg-background text-text max-w-4xl mx-auto p-8 rounded-lg shadow-lg border border-gray-200">
+    <div className="bg-background text-text max-w-4xl mx-auto p-8 rounded-lg shadow-lg border border-gray-200 mt-8">
       <h1 className="text-4xl font-bold text-center mb-6">Contact Us</h1>
 
       {/* Contact Information Section */}
@@ -68,7 +68,7 @@ const Contact = () => {
       </div>
 
       {/* Connect With Us Section */}
-      <div className="mb-8 p-6 bg-white rounded-lg shadow border border-gray-200">
+      <div className="p-6 bg-white rounded-lg shadow border border-gray-200">
         <h2 className="text-2xl font-semibold text-primary border-b pb-2 mb-4">Connect With Us</h2>
         <div className="flex gap-4">
           <a
