@@ -13,7 +13,9 @@ class EditMessageSerializer(serializers.ModelSerializer):
 
     def validate(self, attrs):
         try:
+            personalization = self.context.get('personalization', {})
             parameters_dict = dict(attrs['parameters'])
+            parameters_dict.update(personalization)
             response = OpenAIHelper.chatgpt_api_call(attrs['request'], parameters_dict)
             attrs['response'] = response
         except ValueError as ve:
