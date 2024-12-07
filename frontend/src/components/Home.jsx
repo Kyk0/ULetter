@@ -12,7 +12,7 @@ const keyboardRows = [
 const Home = () => {
   const [activeKey, setActiveKey] = useState(null);
   const [typedTitle, setTypedTitle] = useState("");
-  const titleText = "Write, Edit, and Perfect Your Letters";
+  const titleText = "Write, Edit, and Perfect Your Letter";
 
   // Typing effect for the headline
   useEffect(() => {
