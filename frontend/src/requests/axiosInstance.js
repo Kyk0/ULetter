@@ -13,11 +13,12 @@ axiosInstance.interceptors.request.use(async (config) => {
         const { access, refresh } = JSON.parse(tokens);
 
         const payload = JSON.parse(atob(access.split(".")[1]));
-        const isExpired = Math.floor(Date.now() / 1000) > payload.exp;
+        const currentTime = Math.floor(Date.now() / 1000);
+        const timeLeft = payload.exp - currentTime;
 
-        if (isExpired) {
+        if (timeLeft < 60) {
             try {
-                const response = await axios.post(`${API_BASE_URL}/users/token/refresh/`, { refresh });
+                const response = await axios.post(`${API_BASE_URL}/users/token/`, { refresh });
                 localStorage.setItem("authTokens", JSON.stringify(response.data));
                 config.headers.Authorization = `Bearer ${response.data.access}`;
             } catch (error) {

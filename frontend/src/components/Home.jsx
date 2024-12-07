@@ -40,7 +40,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-b from-gray-50 via-gray-100 to-gray-200">
+    <div className="relative min-h-screen bg-gradient-to-b from-gray-50 font-mono via-gray-100 to-gray-200">
       {/* Hero Section */}
       <section
         className="relative py-24 text-center text-white"
