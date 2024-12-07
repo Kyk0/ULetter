@@ -21,11 +21,6 @@ const AuthProvider = ({ children }) => {
 
     const [user, setUser] = useState(null);
 
-    const isTokenExpired = (token) => {
-        const payload = parseJwt(token);
-        return payload?.exp && Math.floor(Date.now() / 1000) > payload.exp;
-    };
-
     const loginUser = async (credentials) => {
         try {
             const data = await loginUserAPI(credentials);
@@ -66,12 +61,10 @@ const AuthProvider = ({ children }) => {
     }, [authTokens]);
 
     useEffect(() => {
-        if (authTokens && isTokenExpired(authTokens.access)) {
-            logoutUser();
-        } else if (authTokens?.access) {
+        if (authTokens?.access) {
             setUser(parseJwt(authTokens.access));
         }
-    }, [authTokens, logoutUser]);
+    }, [authTokens]);
 
     useEffect(() => {
         const fetchUserProfile = async () => {
@@ -89,7 +82,7 @@ const AuthProvider = ({ children }) => {
     }, [authTokens]);
 
     const isLoggedIn = useCallback(() => {
-        return authTokens && !isTokenExpired(authTokens.access);
+        return !!authTokens?.access;
     }, [authTokens]);
 
     return (
