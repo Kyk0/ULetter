@@ -30,3 +30,5 @@ class UserProfileChangePasswordViewTest(APITestCase):
         response = self.client.put(self.url, self.invalid_payload)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertIn("password_confirm", response.data)
+
+##successful passed

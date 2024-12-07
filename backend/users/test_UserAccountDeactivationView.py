@@ -18,3 +18,5 @@ class UserAccountDeactivationViewTest(APITestCase):
         response = self.client.delete(self.url, self.valid_payload)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertFalse(User.objects.get(username="testuser").is_active)
+
+##successful passed
