@@ -15,6 +15,6 @@ export const registerUserAPI = async (userData) => {
 };
 
 export const logoutUserAPI = async (refreshToken) => {
-    const response = await axiosInstance.post(`/users/logout/`, { refresh: refreshToken });
+    const response = await axiosInstance.post(`/users/logout/`, { refresh_token: refreshToken });
     return response.data;
 };
