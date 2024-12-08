@@ -8,6 +8,8 @@ from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated
 from .models import MessageHistory
+from .models import UserStats
+from .serializers import UserStatsSerializer
 
 class SignupView(APIView):
     def post(self, request):
@@ -135,3 +137,18 @@ class UserProfileMessageHistory(APIView):
             return Response({"message_history": serializer.data},status=status.HTTP_200_OK)
         except Exception as e:
             return Response({"error": str(e)},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+class UserStatsView(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        try:
+            user = request.user
+            stats = UserStats.objects.get(user=user)
+            serializer = UserStatsSerializer(stats)
+            return Response({"user_stats": serializer.data}, status=status.HTTP_200_OK)
+        except UserStats.DoesNotExist:
+            return Response({"error": "User stats not found."}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
