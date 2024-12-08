@@ -6,6 +6,7 @@ import Home from './components/Home';
 import Profile from './components/Profile';
 import Tools from './components/Tools';
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import MinimalNavbar from "./components/MinimalNavbar";
 import SignIn from "./components/SignIn";
 import { AuthContext } from "./services/AuthContext";
@@ -45,6 +46,7 @@ const Layout = ({ children }) => {
             <main className={`flex-grow ${isMinimalNavbar ? "pt-16" : "pt-16"}`}>
                 {children}
             </main>
+            <Footer />
         </div>
     );
 };
