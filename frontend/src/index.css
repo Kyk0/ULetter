@@ -18,3 +18,55 @@
         --accent: #7b3d7b;
     }
 }
+@layer utilities {
+    @keyframes slide-up {
+      from {
+        transform: translateY(20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+  
+    .animate-slide-up {
+      animation: slide-up 0.5s ease-in-out forwards;
+    }
+  
+    .delay-100 {
+      animation-delay: 0.1s;
+    }
+  
+    .delay-200 {
+      animation-delay: 0.2s;
+    }
+  
+    .delay-300 {
+      animation-delay: 0.3s;
+    }
+  
+    .circle-number {
+      background-color: var(--primary);
+      color: #fff;
+      font-size: 1.5rem;
+      font-weight: bold;
+      width: 2.5rem;
+      height: 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      animation: slide-up 0.7s ease-in-out forwards;
+    }
+  
+    .card {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+  
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    }
+  }

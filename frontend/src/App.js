@@ -6,6 +6,7 @@ import Home from './components/Home';
 import Profile from './components/Profile';
 import Tools from './components/Tools';
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import MinimalNavbar from "./components/MinimalNavbar";
 import SignIn from "./components/SignIn";
 import { AuthContext } from "./services/AuthContext";
@@ -37,7 +38,9 @@ const App = () => {
 const Layout = ({ children }) => {
     const location = useLocation();
     const minimalNavbarRoutes = ["/signin"];
+    const noFooterRoutes = ["/profile", "/tools"];
     const isMinimalNavbar = minimalNavbarRoutes.includes(location.pathname);
+    const isNoFooter = noFooterRoutes.includes(location.pathname);
 
     return (
         <div className="min-h-screen bg-background flex flex-col">
@@ -45,6 +48,7 @@ const Layout = ({ children }) => {
             <main className={`flex-grow ${isMinimalNavbar ? "pt-16" : "pt-16"}`}>
                 {children}
             </main>
+            {!isNoFooter && <Footer />}
         </div>
     );
 };
