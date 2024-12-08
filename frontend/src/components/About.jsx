@@ -11,9 +11,9 @@ const About = () => {
     { name: "Kyk0", roles: ["Development Team", "Quality Assurance (QA)"], photo: "photo_2024-12-08_05-48-59.jpg" },
     { name: "FlashLLan", roles: ["Development Team", "Quality Assurance (QA)"], photo: "photo_2024-12-08_05-49-14.jpg" },
     { name: "arseniia02", roles: ["Development Team", "Design Team"], photo: "photo_2024-12-08_05-57-17.jpg" },
-    { name: "nesrtvld", roles: ["Development Team", "Design Team"], photo: "/images/nesrtvld.jpg" },
-    { name: "yuliialuhutsenko", roles: ["Content Team", "Design Team"], photo: "/images/yuliialuhutsenko.jpg" },
-    { name: "SeaOfWater", roles: ["Design Team", "Quality Assurance (QA)"], photo: "photo_2024-12-08_05-49-21.jpg" },
+    { name: "nesrtvld", roles: ["Development Team", "Design Team"], photo: "photo_2024-12-08_16-16-37.jpg" },
+    { name: "yuliialuhutsenko", roles: ["Content Team", "Design Team"], photo: "photo_2024-12-08_18-07-40.jpg" },
+    { name: "SeaOfWater", roles: ["Content Team", "Design Team"], photo: "photo_2024-12-08_05-49-21.jpg" },
   ];
 
   return (
