@@ -5,7 +5,6 @@ from rest_framework import status
 from users.models import MessageHistory
 from users.serializers import SignupSerializer
 
-
 class MessageHistoryModelTests(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(username="testuser", password="password123")
