@@ -14,7 +14,7 @@ import {
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-100 py-10">
+    <footer className="bg-gray-100 py-10 font-mono">
       <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-5 gap-x-4 gap-y-8">
         {/* Contact Column */}
         <div className="flex flex-col">

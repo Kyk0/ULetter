@@ -38,7 +38,9 @@ const App = () => {
 const Layout = ({ children }) => {
     const location = useLocation();
     const minimalNavbarRoutes = ["/signin"];
+    const noFooterRoutes = ["/profile", "/tools"];
     const isMinimalNavbar = minimalNavbarRoutes.includes(location.pathname);
+    const isNoFooter = noFooterRoutes.includes(location.pathname);
 
     return (
         <div className="min-h-screen bg-background flex flex-col">
@@ -46,7 +48,7 @@ const Layout = ({ children }) => {
             <main className={`flex-grow ${isMinimalNavbar ? "pt-16" : "pt-16"}`}>
                 {children}
             </main>
-            <Footer />
+            {!isNoFooter && <Footer />}
         </div>
     );
 };
