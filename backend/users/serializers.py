@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import check_password
 from .models import MessageHistory
+from .models import UserStats
 
 
 class SignupSerializer(serializers.ModelSerializer):
@@ -103,4 +104,9 @@ class UserProfileMessageHistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = MessageHistory
         fields = ['request', 'parameters', 'response', 'timestamp']
+
+class UserStatsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserStats
+        fields = ['messages_generated', 'styles_created']
 
