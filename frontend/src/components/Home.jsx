@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope, faUserTie, faGraduationCap, faUsers } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEnvelope,
+  faUserTie,
+  faGraduationCap,
+  faUsers,
+  faCheckCircle,
+} from "@fortawesome/free-solid-svg-icons";
 
 // Full keyboard layout rows
 const keyboardRows = [
@@ -45,10 +51,7 @@ const Home = () => {
       <section
         className="relative py-24 text-center text-white"
         style={{
-          background: `
-            radial-gradient(circle at top, #1a237e, #4a148c 50%, #7e57c2),
-            url('https://www.transparenttextures.com/patterns/debut-light.png')
-          `,
+          background: `radial-gradient(circle at top, #1a237e, #4a148c 50%, #7e57c2)`,
           height: "80vh",
           zIndex: 1,
         }}
@@ -206,6 +209,34 @@ const Home = () => {
                 Anyone looking to enhance their communication with better-written content.
               </p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Why Choose ULetter? */}
+      <section className="py-16 bg-gray-50">
+        <h2 className="text-4xl font-bold text-gray-800 mb-8 text-center">
+          <FontAwesomeIcon icon={faCheckCircle} className="text-purple-600 mr-3" />
+          Why Choose ULetter?
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="bg-white p-6 shadow-lg rounded-lg transform transition-all hover:scale-105 active:translate-y-1">
+            <h3 className="text-xl font-bold text-purple-700 mb-4">User-Centric Design</h3>
+            <p className="text-gray-600 leading-relaxed">
+              Every feature is designed with the user in mind, ensuring a smooth and intuitive experience.
+            </p>
+          </div>
+          <div className="bg-white p-6 shadow-lg rounded-lg transform transition-all hover:scale-105 active:translate-y-1">
+            <h3 className="text-xl font-bold text-purple-700 mb-4">Continuous Improvement</h3>
+            <p className="text-gray-600 leading-relaxed">
+              Regular updates based on user feedback and emerging technologies.
+            </p>
+          </div>
+          <div className="bg-white p-6 shadow-lg rounded-lg transform transition-all hover:scale-105 active:translate-y-1">
+            <h3 className="text-xl font-bold text-purple-700 mb-4">Collaboration-Driven</h3>
+            <p className="text-gray-600 leading-relaxed">
+              Built by a team with a shared vision for improving written communication.
+            </p>
           </div>
         </div>
       </section>
