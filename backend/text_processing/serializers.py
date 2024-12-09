@@ -1,34 +1,38 @@
-# serializers.py
 from rest_framework import serializers
-from users.models import MessageHistory
-from .openai_helper import OpenAIHelper
 
-class EditMessageSerializer(serializers.ModelSerializer):
-    request = serializers.CharField(required=True, allow_null=False, allow_blank=False)
-    parameters = serializers.JSONField(required=True, allow_null=False)
 
-    class Meta:
-        model = MessageHistory
-        fields = ('request', 'parameters')
+class StyleQuestionSerializer(serializers.Serializer):
+    question = serializers.CharField()
+    answer = serializers.CharField()
 
-    def validate(self, attrs):
-        try:
-            parameters_dict = dict(attrs['parameters'])
-            response = OpenAIHelper.chatgpt_api_call(attrs['request'], parameters_dict)
-            attrs['response'] = response
-        except ValueError as ve:
-            raise serializers.ValidationError({"parameters": str(ve)})
-        except RuntimeError as re:
-            raise serializers.ValidationError({"response": str(re)})
-        except Exception as e:
-            raise serializers.ValidationError({"response": f"Unexpected error: {str(e)}"})
-        return attrs
+    def validate_question(self, value):
+        if not value.strip():
+            raise serializers.ValidationError("Question cannot be empty.")
+        return value
 
-    def create(self, validated_data):
-        user = self.context.get('request').user
-        return MessageHistory.objects.create(
-            request=validated_data['request'],
-            parameters=validated_data['parameters'],
-            response=validated_data['response'],
-            user=user
-        )
+    def validate_answer(self, value):
+        if not value.strip():
+            raise serializers.ValidationError("Answer cannot be empty.")
+        return value
+
+
+class ChatRequestSerializer(serializers.Serializer):
+    request = serializers.CharField(required=True)  # Always required
+    name = serializers.CharField(required=False, allow_null=True, allow_blank=True)
+    surname = serializers.CharField(required=False, allow_null=True, allow_blank=True)
+    category = serializers.ChoiceField(choices=[('formal', 'Formal'), ('neutral', 'Neutral'), ('informal', 'Informal')], required=False)
+    recipients = serializers.CharField(required=False, allow_null=True, allow_blank=True)
+    slang = serializers.BooleanField(required=False)
+    intentional_errors = serializers.BooleanField(required=False)
+    detail_level = serializers.ChoiceField(choices=[('brief', 'Brief'), ('moderate', 'Moderate'), ('elaborate', 'Elaborate')], required=False)
+    tone = serializers.ChoiceField(choices=[('polite', 'Polite'), ('friendly', 'Friendly'), ('serious', 'Serious'), ('playful', 'Playful')], required=False)
+    vocabulary_complexity = serializers.ChoiceField(choices=[('simple', 'Simple'), ('moderate', 'Moderate'), ('advanced', 'Advanced')], required=False)
+    politeness_level = serializers.ChoiceField(choices=[('low', 'Low'), ('moderate', 'Moderate'), ('high', 'High')], required=False)
+    punctuation_style = serializers.ChoiceField(choices=[('formal', 'Formal'), ('casual', 'Casual')], required=False)
+    message_type = serializers.ChoiceField(choices=[('chat', 'Chat'), ('email', 'Email')], required=False)
+    questions = StyleQuestionSerializer(many=True, required=False)
+
+    def validate_questions(self, value):
+        if value and len(value) > 5:
+            raise serializers.ValidationError("A maximum of 5 questions are allowed.")
+        return value
