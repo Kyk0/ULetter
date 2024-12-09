@@ -8,7 +8,6 @@ import {
   faCheckCircle,
 } from "@fortawesome/free-solid-svg-icons";
 
-// Full keyboard layout rows
 const keyboardRows = [
   ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
   ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
@@ -20,7 +19,6 @@ const Home = () => {
   const [typedTitle, setTypedTitle] = useState("");
   const titleText = "Write, Edit, and Perfect Your Letter";
 
-  // Typing effect for the headline
   useEffect(() => {
     let index = 0;
     const typeEffect = setInterval(() => {
@@ -31,7 +29,6 @@ const Home = () => {
     return () => clearInterval(typeEffect);
   }, []);
 
-  // Simulate random key presses
   useEffect(() => {
     const interval = setInterval(() => {
       const randomRow = Math.floor(Math.random() * keyboardRows.length);
@@ -98,8 +95,8 @@ const Home = () => {
 <section
   className="py-16 mx-auto w-full rounded-lg shadow-lg"
   style={{
-    background: "linear-gradient(135deg, #DAD9E8, #B8D6E5)", // Soft gradient from pale lavender to light teal
-    boxShadow: "0 4px 10px rgba(0, 0, 0, 0.2)", // Subtle shadow for depth
+    background: "linear-gradient(135deg, #DAD9E8, #B8D6E5)",
+    boxShadow: "0 4px 10px rgba(0, 0, 0, 0.2)",
   }}
 >
   <div className="max-w-6xl mx-auto px-6 text-center">
@@ -138,8 +135,8 @@ const Home = () => {
 <section
   className="py-16 mx-auto w-full rounded-lg shadow-lg"
   style={{
-    background: "linear-gradient(135deg, #5B3E96, #2B5876)", // A blend of rich purple (#5B3E96) transitioning to deep teal (#2B5876)
-    boxShadow: "0 4px 15px rgba(0, 0, 0, 0.2)", // Subtle shadow for depth
+    background: "linear-gradient(135deg, #5B3E96, #2B5876)",
+    boxShadow: "0 4px 15px rgba(0, 0, 0, 0.2)",
   }}
 >
   <div className="max-w-6xl mx-auto px-6">
@@ -184,8 +181,8 @@ const Home = () => {
 <section
   className="py-16 mx-auto w-full rounded-lg shadow-lg"
   style={{
-    background: "linear-gradient(135deg, #D8CCE5, #BFDCE5)", // Lighter gradient from lavender to pale teal
-    boxShadow: "0 4px 10px rgba(0, 0, 0, 0.15)", // Subtle shadow for a softer look
+    background: "linear-gradient(135deg, #D8CCE5, #BFDCE5)",
+    boxShadow: "0 4px 10px rgba(0, 0, 0, 0.15)",
   }}
 >
   <div className="max-w-6xl mx-auto px-6 text-center">
@@ -230,8 +227,8 @@ const Home = () => {
 <section
   className="py-16 mx-auto w-full rounded-lg shadow-lg"
   style={{
-    background: "linear-gradient(135deg, #4E4376, #2B5876)", // Gradient from deep purple to dark blue
-    boxShadow: "0 4px 10px rgba(0, 0, 0, 0.3)", // Shadow
+    background: "linear-gradient(135deg, #4E4376, #2B5876)",
+    boxShadow: "0 4px 10px rgba(0, 0, 0, 0.3)",
   }}
 >
   <div className="max-w-6xl mx-auto px-6 text-center">
