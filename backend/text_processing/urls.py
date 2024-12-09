@@ -1,6 +1,7 @@
 from django.urls import path
-from .views import EditMessageView
+
+from text_processing.views import GenerateMessageView
 
 urlpatterns = [
-    path('edit-message/', EditMessageView.as_view() , name='process_message'),
+    path('chat-gpt/call/', GenerateMessageView.as_view() , name='chat-gpt-call'),
 ]

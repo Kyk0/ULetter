@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'text_processing',
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
+    'style_personalization',
 ]
 
 REST_FRAMEWORK = {

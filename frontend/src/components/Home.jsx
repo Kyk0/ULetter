@@ -49,50 +49,50 @@ const Home = () => {
     <div className="relative min-h-screen bg-gradient-to-b from-gray-50 font-mono via-gray-100 to-gray-200">
       {/* Hero Section */}
       <section
-        className="relative py-24 text-center text-white"
-        style={{
-          background: `radial-gradient(circle at top, #1a237e, #4a148c 50%, #7e57c2)`,
-          height: "80vh",
-          zIndex: 1,
-        }}
-      >
-        <div className="relative z-10 flex flex-col items-center justify-center h-full">
-          {/* Envelope Icon */}
-          <FontAwesomeIcon
-            icon={faEnvelope}
-            className="text-6xl text-indigo-300 mb-6 animate-bounce"
-          />
-          {/* Main Headline with Typing Effect */}
-          <h1 className="text-5xl font-extrabold tracking-wide mb-6">
-            {typedTitle || ""}
-          </h1>
-          <p className="text-lg max-w-3xl mx-auto mb-8 text-gray-200">
-            Use <span className="font-bold text-white">ULetter</span> to rewrite
-            letters in various styles, generate new ones with specific topics, or
-            get feedback on your drafts to improve them.
-          </p>
-          {/* Animated Keyboard */}
-          <div className="mt-6 bg-gray-900 rounded-lg shadow-lg p-4">
-            {keyboardRows.map((row, rowIndex) => (
-              <div key={rowIndex} className="flex justify-center space-x-2 mb-2">
-                {row.map((key) => (
-                  <div
-                    key={key}
-                    className={`w-10 h-10 flex items-center justify-center text-white text-lg font-bold rounded ${
-                      activeKey === key ? "bg-indigo-500 animate-bounce" : "bg-gray-700"
-                    }`}
-                    style={{
-                      transition: "background-color 0.2s ease-in-out",
-                    }}
-                  >
-                    {key}
-                  </div>
-                ))}
-              </div>
-            ))}
-          </div>
+  className="relative py-24 text-center text-white"
+  style={{
+    background: `radial-gradient(circle at top, #1a237e, #4a148c 50%, #7e57c2)`,
+    height: "80vh",
+    zIndex: 1,
+  }}
+>
+  <div className="relative z-10 flex flex-col items-center justify-center h-full">
+    {/* Envelope Icon */}
+    <FontAwesomeIcon
+      icon={faEnvelope}
+      className="text-6xl text-indigo-300 mb-4 animate-bounce"
+    />
+    {/* Main Headline with Typing Effect */}
+    <h1 className="text-5xl font-extrabold tracking-wide mb-6">
+      {typedTitle || ""}
+    </h1>
+    <p className="text-lg max-w-3xl mx-auto mb-8 text-gray-200">
+      Use <span className="font-bold text-white">ULetter</span> to rewrite
+      letters in various styles, generate new ones with specific topics, or get
+      feedback on your drafts to improve them.
+    </p>
+    {/* Animated Keyboard */}
+    <div className="bg-gray-900 rounded-lg shadow-lg p-4">
+      {keyboardRows.map((row, rowIndex) => (
+        <div key={rowIndex} className="flex justify-center space-x-2 mb-2">
+          {row.map((key) => (
+            <div
+              key={key}
+              className={`w-10 h-10 flex items-center justify-center text-white text-lg font-bold rounded ${
+                activeKey === key ? "bg-indigo-500 animate-bounce" : "bg-gray-700"
+              }`}
+              style={{
+                transition: "background-color 0.2s ease-in-out",
+              }}
+            >
+              {key}
+            </div>
+          ))}
         </div>
-      </section>
+      ))}
+    </div>
+  </div>
+</section>
 
       {/* Features Section */}
 <section
