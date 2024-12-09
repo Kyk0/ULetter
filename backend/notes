@@ -1,6 +1,6 @@
 //////////////////////
 TO START:
-At first you need to run "npm start" in frontend directory, to start the frontend. Second of all you need to run "python manage.py runserver" in backend directory to start the backend.
+At first you need to run "npm install" and then "npm start" in frontend directory, to start the frontend. Second of all you need to run "python manage.py runserver" in backend directory to start the backend.
 //////////////////////
 
 

@@ -25,12 +25,18 @@ const About = () => {
         <h1 className="text-5xl font-extrabold text-gray-800 mb-6">
           About the Project
         </h1>
-        <p className="text-lg text-gray-700 leading-relaxed">
-          Welcome to <span className="text-blue-600 font-semibold">ULetter</span>, your ultimate platform for simplifying and enhancing written communication. 
-          Designed to empower users—from professionals drafting formal documents to students perfecting essays—ULetter is committed to making writing easier, clearer, and more effective.
-        </p>
-        <ul className="list-disc list-inside text-lg text-gray-700 mt-4 space-y-2">
-          <li>Rewrite letters in specific styles, such as concise, slang, or professional.</li>
+        <p className="text-lg text-gray-700 leading-relaxed text-justify">
+  Welcome to <span className="text-blue-600 font-semibold">ULetter</span>, your comprehensive solution for enhancing your written communication. Whether you're a professional working on critical documents, a student perfecting essays, or someone drafting personal letters, ULetter empowers you to achieve clarity and precision. Our platform is dedicated to simplifying the writing process, ensuring your messages are effective and impactful. Let us be your trusted partner in writing with confidence and ease.
+</p>
+ {/* Separator Line */}
+ <div className="relative mt-6 mb-4">
+      <div
+        className="h-1 w-full bg-white opacity-50 rounded-lg"
+        style={{ filter: "blur(2px)" }}
+      ></div>
+    </div>
+        <ul className="list-disc list-inside text-lg text-gray-700 mt-4 space-y-1 text-justify">
+          <li>Rewrite your letters in specific styles, such as concise, slang, or professional.</li>
           <li>Compose letters from scratch by specifying a subject and tone.</li>
           <li>Learn and adapt to your writing style for future communications.</li>
           <li>Upload drafts to receive actionable feedback and recommendations for improvement.</li>
@@ -40,7 +46,7 @@ const About = () => {
         <img
           src="how-to-write-a-letter-to-the-editor.jpg"
           alt="About the project"
-          className="rounded-lg shadow-lg"
+          className="w-70 h-95 object-cover rounded-lg shadow-lg ml-8"
         />
       </div>
     </div>
@@ -48,12 +54,12 @@ const About = () => {
 </section>
 
      {/* Project Highlights */}
-<section className="py-16 bg-gradient-to-b from-gray-100 to-gray-50 w-full">
+     <section className="py-16 bg-gradient-to-b from-gray-100 to-gray-50 w-full">
   <div className="max-w-6xl mx-auto px-6">
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
       {/* Left Section */}
       <div>
-        <h2 className="text-4xl font-bold text-gray-800 mb-6">
+        <h2 className="text-4xl font-bold text-gray-800 mb-6 flex items-center">
           <FontAwesomeIcon icon={faCode} className="text-teal-600 mr-3" />
           Project Highlights
         </h2>
@@ -61,9 +67,9 @@ const About = () => {
           <h3 className="text-2xl font-bold text-gray-800 mb-4">
             Collaborative Effort
           </h3>
-          <p className="text-lg text-gray-700 leading-relaxed">
+          <p className="text-lg text-gray-700 leading-relaxed text-justify">
             A multidisciplinary team of developers, designers, and content
-            strategists worked together to create a seamless and user-friendly
+            strategists collaborated to deliver a seamless and user-friendly
             experience.
           </p>
         </div>
@@ -71,26 +77,41 @@ const About = () => {
           <h3 className="text-2xl font-bold text-gray-800 mb-4">
             Advanced Technologies
           </h3>
-          <ul className="text-lg text-gray-700 leading-relaxed space-y-2">
-            <li><strong>Frontend:</strong> React.js for dynamic and responsive interfaces.</li>
-            <li><strong>Backend:</strong> Node.js with RESTful APIs for efficient server-side handling.</li>
-            <li><strong>Styling:</strong> Tailwind CSS for a modern, attractive design.</li>
-            <li><strong>Database:</strong> MongoDB for secure and scalable data management.</li>
+          <ul className="text-lg text-gray-700 leading-relaxed space-y-2 list-disc ml-6 text-justify">
+            <li>
+              <strong>Frontend:</strong> React.js for dynamic, responsive, and
+              user-friendly interfaces.
+            </li>
+            <li>
+              <strong>Backend:</strong> Django for robust backend logic and
+              efficient server-side processing.
+            </li>
+            <li>
+              <strong>Styling:</strong> Tailwind CSS for modern and
+              consistent design.
+            </li>
+            <li>
+              <strong>API Integration:</strong> Django REST Framework (DRF) for
+              seamless and secure API development.
+            </li>
+            <li>
+              <strong>Database:</strong> SQLite for local development and
+              Django ORM for efficient database management and scalability.
+            </li>
           </ul>
         </div>
       </div>
       {/* Right Section */}
-      <div>
+      <div className="flex justify-center">
         <img
-          src="1663764430142.png"
-          alt="Project Highlights"
-          className="rounded-lg shadow-lg"
+          src="1663764430142.png" 
+          alt="Robot with lightbulb"
+          className="w-85 h-85 object-cover rounded-lg shadow-lg ml-8"
         />
       </div>
     </div>
   </div>
 </section>
-
 
 
       {/* Future Outlook */}
@@ -102,12 +123,12 @@ const About = () => {
               <h2 className="text-4xl font-bold text-gray-800 mb-6 font-custom">
                 Future Outlook
               </h2>
-              <p className="text-lg text-gray-700 leading-relaxed mb-4 font-custom">
+              <p className="text-lg text-gray-700 leading-relaxed mb-4 font-custom text-justify">
                 At ULetter, innovation drives our mission to continuously improve how
                 people communicate through written content. We are committed to expanding
                 our platform's capabilities with advanced technologies and new features.
               </p>
-              <ul className="list-disc list-inside text-lg text-gray-700 space-y-4 font-custom">
+              <ul className="list-disc list-inside text-lg text-gray-700 space-y-2 font-custom text-justify">
                 <li>
                   <strong>AI-Powered Grammar and Style Checker:</strong> Providing instant
                   corrections and suggestions to refine your writing.
@@ -132,7 +153,7 @@ const About = () => {
               <img
                 src="photo_2024-12-08_05-16-26.jpg"
                 alt="Future Outlook"
-                className="rounded-lg shadow-lg"
+                className="w-70 h-85 object-cover rounded-lg shadow-lg ml-8"
               />
             </div>
           </div>
