@@ -14,7 +14,7 @@ from users.models import UserStats
 
 class QuestionView(APIView):
     def get(self, request):
-        category = request.data.get('category')
+        category = request.query_params.get('category')
 
         if category not in ['formal', 'neutral', 'informal']:
             return Response({'error': 'Invalid category'}, status=status.HTTP_400_BAD_REQUEST)
