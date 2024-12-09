@@ -28,9 +28,15 @@ const About = () => {
         <p className="text-lg text-gray-700 leading-relaxed text-justify">
   Welcome to <span className="text-blue-600 font-semibold">ULetter</span>, your comprehensive solution for enhancing your written communication. Whether you're a professional working on critical documents, a student perfecting essays, or someone drafting personal letters, ULetter empowers you to achieve clarity and precision. Our platform is dedicated to simplifying the writing process, ensuring your messages are effective and impactful. Let us be your trusted partner in writing with confidence and ease.
 </p>
-
+ {/* Separator Line */}
+ <div className="relative mt-6 mb-4">
+      <div
+        className="h-1 w-full bg-white opacity-50 rounded-lg"
+        style={{ filter: "blur(2px)" }}
+      ></div>
+    </div>
         <ul className="list-disc list-inside text-lg text-gray-700 mt-4 space-y-1 text-justify">
-          <li>Rewrite letters in specific styles, such as concise, slang, or professional.</li>
+          <li>Rewrite your letters in specific styles, such as concise, slang, or professional.</li>
           <li>Compose letters from scratch by specifying a subject and tone.</li>
           <li>Learn and adapt to your writing style for future communications.</li>
           <li>Upload drafts to receive actionable feedback and recommendations for improvement.</li>
@@ -40,7 +46,7 @@ const About = () => {
         <img
           src="how-to-write-a-letter-to-the-editor.jpg"
           alt="About the project"
-          className="w-70 h-85 object-cover rounded-lg shadow-lg ml-8"
+          className="w-70 h-95 object-cover rounded-lg shadow-lg ml-8"
         />
       </div>
     </div>
@@ -147,7 +153,7 @@ const About = () => {
               <img
                 src="photo_2024-12-08_05-16-26.jpg"
                 alt="Future Outlook"
-                className="rounded-lg shadow-lg ml-8"
+                className="w-70 h-85 object-cover rounded-lg shadow-lg ml-8"
               />
             </div>
           </div>
