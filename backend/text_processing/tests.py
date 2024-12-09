@@ -52,6 +52,27 @@ class EditMessageSerializerTests(TestCase):
         self.assertFalse(serializer.is_valid())
         self.assertIn("parameters", serializer.errors)
 
+    def test_invalid_serializer_missing_request(self):
+        """Test serializer with missing request."""
+        data = {"parameters": {"tone": "formal", "message_type": "email"}}
+        serializer = EditMessageSerializer(data=data)
+        self.assertFalse(serializer.is_valid())
+        self.assertIn("request", serializer.errors)
+
+    def test_invalid_serializer_invalid_parameters_structure(self):
+        """Test serializer with invalid structure for parameters."""
+        data = {"request": "Test request", "parameters": "invalid_structure"}
+        serializer = EditMessageSerializer(data=data)
+        self.assertFalse(serializer.is_valid())
+        self.assertIn("parameters", serializer.errors)
+
+    def test_invalid_serializer_empty_parameters_field(self):
+        """Test serializer with an empty 'parameters' field."""
+        data = {"request": "Test request", "parameters": {}}
+        serializer = EditMessageSerializer(data=data)
+        self.assertFalse(serializer.is_valid())
+        self.assertIn("parameters", serializer.errors)
+
 
 class OpenAIHelperTests(TestCase):
     @patch("text_processing.openai_helper.OpenAIHelper.chatgpt_api_call")
@@ -75,7 +96,6 @@ class OpenAIHelperTests(TestCase):
         with self.assertRaises(RuntimeError):
             OpenAIHelper.chatgpt_api_call("Test request", {"tone": "formal"})
             
-
     @patch("text_processing.openai_helper.OpenAIHelper.chatgpt_api_call")
     def test_chatgpt_api_large_payload(self, mock_api_call):
         """Test OpenAI API with a large payload."""
@@ -83,6 +103,41 @@ class OpenAIHelperTests(TestCase):
         mock_api_call.return_value = "Mocked large payload response"
         response = OpenAIHelper.chatgpt_api_call("Large request", large_payload)
         self.assertEqual(response, "Mocked large payload response")
+
+    @patch("text_processing.openai_helper.OpenAIHelper.chatgpt_api_call")
+    def test_chatgpt_api_call_empty_request(self, mock_api_call):
+        """Test OpenAI API with an empty request."""
+        mock_api_call.side_effect = ValueError("Request cannot be empty")
+        with self.assertRaises(ValueError):
+            OpenAIHelper.chatgpt_api_call("", {"tone": "formal"})
+
+    @patch("text_processing.openai_helper.OpenAIHelper.chatgpt_api_call")
+    def test_chatgpt_api_call_empty_parameters(self, mock_api_call):
+        """Test OpenAI API with empty parameters."""
+        mock_api_call.side_effect = ValueError("Parameters cannot be empty")
+        with self.assertRaises(ValueError):
+            OpenAIHelper.chatgpt_api_call("Valid request", {})
+
+    @patch("text_processing.openai_helper.OpenAIHelper.chatgpt_api_call")
+    def test_chatgpt_api_call_connection_error(self, mock_api_call):
+        """Test OpenAI API call with connection error."""
+        mock_api_call.side_effect = ConnectionError("Failed to connect")
+        with self.assertRaises(ConnectionError):
+            OpenAIHelper.chatgpt_api_call("Test request", {"tone": "formal"})
+    
+    @patch("text_processing.openai_helper.OpenAIHelper.chatgpt_api_call")
+    def test_chatgpt_api_call_timeout_error(self, mock_api_call):
+        """Test OpenAI API call with timeout error."""
+        mock_api_call.side_effect = TimeoutError("Request timed out")
+        with self.assertRaises(TimeoutError):
+            OpenAIHelper.chatgpt_api_call("Test request", {"tone": "formal"})
+
+    @patch("text_processing.openai_helper.OpenAIHelper.chatgpt_api_call")
+    def test_chatgpt_api_call_unexpected_error(self, mock_api_call):
+        """Test OpenAI API with an unexpected error."""
+        mock_api_call.side_effect = Exception("Unexpected error")
+        with self.assertRaises(Exception):
+            OpenAIHelper.chatgpt_api_call("Test request", {"tone": "formal"})
 
 
 class EditMessageViewTests(TestCase):
@@ -116,3 +171,35 @@ class EditMessageViewTests(TestCase):
         response = self.client.post(self.url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertIn("parameters", response.data)
+
+    def test_create_message_empty_request(self):
+        """Test API with empty request."""
+        data = {"request": "", "parameters": {"tone": "formal", "message_type": "email"}}
+        response = self.client.post(self.url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn("request", response.data)
+
+    def test_create_message_empty_parameters(self):
+        """Test API with empty parameters."""
+        data = {"request": "Valid request", "parameters": {}}
+        response = self.client.post(self.url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn("parameters", response.data)
+
+    def test_create_message_get_method(self):
+        """Test GET request on the create message endpoint."""
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    def test_create_message_put_method(self):
+        """Test PUT request on the create message endpoint (which should not be allowed)."""
+        data = {"request": "Updated request", "parameters": {"tone": "informal"}}
+        response = self.client.put(self.url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    def test_create_message_missing_authentication(self):
+        """Test API with missing authentication token."""
+        self.client.force_authenticate(user=None)
+        data = {"request": "Test request", "parameters": {"tone": "formal", "message_type": "email"}}
+        response = self.client.post(self.url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
