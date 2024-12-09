@@ -98,52 +98,22 @@ const Footer = () => {
   <ul className="text-gray-600 space-y-2 font-medium">
     <li>
       <a
-        href="https://www.easyassess.com"
+        href="https://www.typli.ai"
         target="_blank"
         rel="noopener noreferrer"
         className="px-4 py-2 hover:text-accent transition-colors duration-300 ease-in-out"
       >
-        EasyAssess
+        typli
       </a>
     </li>
     <li>
       <a
-        href="https://www.mettl.com"
+        href="https://toolbaz.com"
         target="_blank"
         rel="noopener noreferrer"
         className="px-4 py-2 hover:text-accent transition-colors duration-300 ease-in-out"
       >
-        Mettl
-      </a>
-    </li>
-    <li>
-      <a
-        href="https://www.testgorilla.com"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="px-4 py-2 hover:text-accent transition-colors duration-300 ease-in-out"
-      >
-        TestGorilla
-      </a>
-    </li>
-    <li>
-      <a
-        href="https://hireez.com/"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="px-4 py-2 hover:text-accent transition-colors duration-300 ease-in-out"
-      >
-        HireEZ
-      </a>
-    </li>
-    <li>
-      <a
-        href="https://www.seekout.com"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="px-4 py-2 hover:text-accent transition-colors duration-300 ease-in-out"
-      >
-        SeekOut
+        ToolBaz
       </a>
     </li>
     <li>
@@ -164,6 +134,16 @@ const Footer = () => {
         className="px-4 py-2 hover:text-accent transition-colors duration-300 ease-in-out"
       >
         Grammarly
+      </a>
+    </li>
+    <li>
+      <a
+        href="https://writingmate.ai"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="px-4 py-2 hover:text-accent transition-colors duration-300 ease-in-out"
+      >
+        ChatLabs
       </a>
     </li>
   </ul>
