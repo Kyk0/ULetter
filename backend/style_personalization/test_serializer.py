@@ -69,3 +69,4 @@ class StyleQuestionSerializerTest(TestCase):
         serializer = StyleQuestionSerializer(data=invalid_data)
         self.assertFalse(serializer.is_valid())
         self.assertIn("answer", serializer.errors)
+#test were passed successfully
