@@ -1,23 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { getUserProfile, getUserStats, getUserMessageHistory, getUserStyles } from "../requests/profile";
+import { getUserProfile, getUserStats, getUserMessageHistory } from "../requests/profile";
 import MessageHistoryModal from "./MessageHistoryModal";
 import EditProfileModal from "./EditProfileModal";
 import ChangePasswordModal from "./ChangePasswordModal";
-import StyleDetailsModal from "./StyleDetailsModal";
 
 const Profile = () => {
     const [profileData, setProfileData] = useState(null);
     const [statsData, setStatsData] = useState(null);
     const [messageHistory, setMessageHistory] = useState([]);
-    const [stylesData, setStylesData] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    const [uploadedPhoto, setUploadedPhoto] = useState(null); // State for the uploaded photo
     const [selectedMessage, setSelectedMessage] = useState(null);
     const [isMessageModalOpen, setIsMessageModalOpen] = useState(false);
-
-    const [selectedStyle, setSelectedStyle] = useState(null);
-    const [isStyleModalOpen, setIsStyleModalOpen] = useState(false);
-
     const [isEditProfileModalOpen, setIsEditProfileModalOpen] = useState(false);
     const [isChangePasswordModalOpen, setIsChangePasswordModalOpen] = useState(false);
 
@@ -31,17 +26,13 @@ const Profile = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const [profile, stats, messages, styles] = await Promise.all([
-                    getUserProfile(),
-                    getUserStats(),
-                    getUserMessageHistory(),
-                    getUserStyles()
-                ]);
+                const profile = await getUserProfile();
+                const stats = await getUserStats();
+                const messages = await getUserMessageHistory();
 
                 setProfileData(profile);
                 setStatsData(stats);
                 setMessageHistory(messages.message_history);
-                setStylesData(styles);
 
                 localStorage.setItem("profileData", JSON.stringify(profile));
             } catch (error) {
@@ -61,7 +52,6 @@ const Profile = () => {
         };
     }, []);
 
-    // Make the entire page unscrollable again
     useEffect(() => {
         document.body.style.overflow = "hidden";
         return () => {
@@ -79,21 +69,26 @@ const Profile = () => {
         setIsMessageModalOpen(false);
     };
 
-    const openStyleModal = (style) => {
-        setSelectedStyle(style);
-        setIsStyleModalOpen(true);
-    };
-
-    const closeStyleModal = () => {
-        setSelectedStyle(null);
-        setIsStyleModalOpen(false);
-    };
-
     const openEditProfileModal = () => setIsEditProfileModalOpen(true);
     const closeEditProfileModal = () => setIsEditProfileModalOpen(false);
 
     const openChangePasswordModal = () => setIsChangePasswordModalOpen(true);
     const closeChangePasswordModal = () => setIsChangePasswordModalOpen(false);
+
+    const handlePhotoUpload = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                setUploadedPhoto(reader.result); // Store the uploaded photo as a data URL
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    const removePhoto = () => {
+        setUploadedPhoto(null); // Remove the uploaded photo
+    };
 
     const formatDate = (dateString) => {
         const options = { year: "numeric", month: "long", day: "numeric" };
@@ -115,11 +110,6 @@ const Profile = () => {
                 message={selectedMessage}
                 onClose={closeMessageModal}
             />
-            <StyleDetailsModal
-                isOpen={isStyleModalOpen}
-                styleData={selectedStyle}
-                onClose={closeStyleModal}
-            />
             <EditProfileModal
                 isOpen={isEditProfileModalOpen}
                 onClose={closeEditProfileModal}
@@ -133,12 +123,43 @@ const Profile = () => {
 
             <main className="flex flex-col lg:flex-row mt-8 w-11/12 max-w-6xl">
                 <div className="lg:w-1/3 bg-secondary/80 p-6 border-2 border-accent shadow-md rounded-md flex flex-col">
-                    <div className="w-32 h-32 mx-auto bg-gray-200 rounded-full overflow-hidden border-2 border-primary">
-                        <img
-                            src="photo_2024-12-10_01-27-33.jpg"
-                            alt="Placeholder"
-                            className="w-full h-full object-cover"
+                    <div className="relative w-32 h-32 mx-auto bg-gray-200 rounded-full overflow-hidden border-2 border-primary">
+                        {uploadedPhoto ? (
+                            <img
+                                src={uploadedPhoto}
+                                alt="Uploaded Profile"
+                                className="w-full h-full object-cover"
+                            />
+                        ) : (
+                            <img
+                                src="photo_2024-12-08_05-48-59.jpg"
+                                alt="Placeholder"
+                                className="w-full h-full object-cover"
+                            />
+                        )}
+                    </div>
+                    <div className="mt-2 flex flex-col items-center">
+                        <label
+                            htmlFor="photo-upload"
+                            className="px-4 py-2 bg-primary text-white rounded cursor-pointer hover:bg-accent transition-all duration-300 text-center"
+                        >
+                            Edit
+                        </label>
+                        <input
+                            id="photo-upload"
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            onChange={handlePhotoUpload}
                         />
+                        {uploadedPhoto && (
+                            <button
+                                className="mt-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-all duration-300 text-center"
+                                onClick={removePhoto}
+                            >
+                                Remove Photo
+                            </button>
+                        )}
                     </div>
                     <div className="mt-4 text-center">
                         <h2 className="text-xl font-bold text-text">{profileData.username}</h2>
@@ -170,10 +191,6 @@ const Profile = () => {
                             <li>
                                 <span className="font-semibold">Styles Created:</span>{" "}
                                 {statsData.user_stats.styles_created}
-                            </li>
-                            <li>
-                                <span className="font-semibold">Time Saved (minutes):</span>{" "}
-                                {statsData.user_stats.messages_generated * statsData.user_stats.styles_created}
                             </li>
                         </ul>
                     </div>
@@ -222,23 +239,7 @@ const Profile = () => {
                     <div className="bg-secondary/80 p-5 border-2 border-accent shadow-md rounded-md">
                         <h3 className="text-xl font-semibold text-text">Personalized Styles</h3>
                         <div className="mt-4 h-64 overflow-y-auto bg-gray-100 rounded p-2">
-                            {stylesData.length === 0 ? (
-                                <p className="text-text">No styles configured...</p>
-                            ) : (
-                                <ul className="space-y-4">
-                                    {stylesData.map((style, index) => (
-                                        <li
-                                            key={index}
-                                            className="p-2 bg-white rounded shadow-md hover:bg-gray-200 cursor-pointer transition"
-                                            onClick={() => openStyleModal(style)}
-                                        >
-                                            <p>
-                                                <strong>Name:</strong> {style.name}
-                                            </p>
-                                        </li>
-                                    ))}
-                                </ul>
-                            )}
+                            <p className="text-text">No styles configured...</p>
                         </div>
                     </div>
                 </div>
