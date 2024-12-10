@@ -1,13 +1,13 @@
-const { loginUserAPI, registerUserAPI, logoutUserAPI } = require('./auth');
+const { loginUserAPI, registerUserAPI, logoutUserAPI } = require('../requests/auth');
 
 // Mocking axiosInstance
-jest.mock('./axiosInstance', () => ({
+jest.mock('../requests/axiosInstance', () => ({
     post: jest.fn(),
     get: jest.fn(),
     put: jest.fn(),
 }));
 
-const axiosInstance = require('./axiosInstance');
+const axiosInstance = require('../requests/axiosInstance');
 
 // Mock for localStorage
 const localStorageMock = (() => {

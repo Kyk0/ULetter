@@ -1,8 +1,8 @@
-const axiosInstance = require('./axiosInstance');
-const { getUserProfile, updateUserProfile } = require('./profile');
+const axiosInstance = require('../requests/axiosInstance');
+const { getUserProfile, updateUserProfile } = require('../requests/profile');
 
 // Mocking axiosInstance
-jest.mock('./axiosInstance', () => ({
+jest.mock('../requests/axiosInstance', () => ({
     get: jest.fn(),
     put: jest.fn(),
     post: jest.fn(), // Ensure the post method is mocked as well

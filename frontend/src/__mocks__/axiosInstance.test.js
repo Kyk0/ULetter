@@ -1,7 +1,7 @@
-const axiosInstance = require('./axiosInstance');
+const axiosInstance = require('../requests/axiosInstance');
 
 // Mocking axiosInstance
-jest.mock('./axiosInstance', () => ({
+jest.mock('../requests/axiosInstance', () => ({
     interceptors: {
         request: { use: jest.fn() },
         response: { use: jest.fn() },

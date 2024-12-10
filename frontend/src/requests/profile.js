@@ -24,3 +24,19 @@ export const changeUserPassword = async (data) => {
     const response = await axiosInstance.put("/users/profile/change-password/", data);
     return response.data;
 };
+export const getUserStyles = async () => {
+    const stylesResponse = await axiosInstance.get(`/style_personalization/styles/retrieve`);
+    return stylesResponse.data;
+};
+
+export const getStyleQuestions = async (category) => {
+    const response = await axiosInstance.get("/style_personalization/questions", {
+        params: { category },
+    });
+    return response.data;
+};
+
+export const sendToChatGPT = async (payload) => {
+    const response = await axiosInstance.post("/text-processing/chat-gpt/call/", payload);
+    return response.data;
+};
