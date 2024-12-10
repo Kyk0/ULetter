@@ -14,7 +14,7 @@ import {
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-100 py-10">
+    <footer className="bg-gray-100 py-10 font-mono">
       <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-5 gap-x-4 gap-y-8">
         {/* Contact Column */}
         <div className="flex flex-col">
@@ -47,10 +47,8 @@ const Footer = () => {
         <div className="flex flex-col">
           <h3 className="text-xl font-bold text-gray-800 mb-4">Tools</h3>
           <ul className="text-gray-600 space-y-2 font-medium">
-            <li>Letter Generator</li>
-            <li>Style Rewriter</li>
-            <li>Feedback Analyzer</li>
-            <li>Placeholder Tool</li>
+            <li>Message editor</li>
+            <li>Styling tool</li>
           </ul>
         </div>
 
@@ -160,14 +158,6 @@ const Footer = () => {
     <li>
       <span className="font-bold text-purple-600">Core Features:</span> Letter
       creation, style rewriting, and feedback tools.
-    </li>
-    <li>
-      <span className="font-bold text-purple-600">Who We Serve:</span> Students,
-      professionals, and anyone looking to enhance their writing.
-    </li>
-    <li>
-      <span className="font-bold text-purple-600">Vision:</span> Empower users
-      worldwide with innovative writing solutions.
     </li>
   </ul>
 </div>

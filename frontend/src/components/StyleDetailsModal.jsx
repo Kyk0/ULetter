@@ -4,8 +4,8 @@ const StyleDetailsModal = ({ isOpen, styleData, onClose }) => {
     if (!isOpen || !styleData) return null;
 
     return (
-        <div className="absolute inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 p-2">
-            <div className="bg-white p-4 rounded-md shadow-md w-11/12 lg:w-1/3 relative">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 p-2">
+            <div className="bg-white p-4 rounded-md shadow-md w-11/12 lg:w-1/3 relative max-h-[90vh] overflow-auto">
                 <button
                     className="absolute top-2 right-2 text-black font-bold"
                     onClick={onClose}
@@ -50,7 +50,8 @@ const StyleDetailsModal = ({ isOpen, styleData, onClose }) => {
                             <ul className="list-disc ml-4">
                                 {styleData.questions.map((q, qIndex) => (
                                     <li key={qIndex}>
-                                        <strong>Q:</strong> {q.question}<br />
+                                        <strong>Q:</strong> {q.question}
+                                        <br />
                                         <strong>A:</strong> {q.answer}
                                     </li>
                                 ))}

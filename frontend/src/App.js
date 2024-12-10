@@ -11,6 +11,7 @@ import MinimalNavbar from "./components/MinimalNavbar";
 import SignIn from "./components/SignIn";
 import { AuthContext } from "./services/AuthContext";
 import MessageEdit from "./components/MessageEdit";
+import StylingTool from "./components/StylinTool";
 
 const App = () => {
     const { isLoggedIn } = useContext(AuthContext);
@@ -30,6 +31,7 @@ const App = () => {
                     />
                     <Route path="/tools" element={<Tools />} />
                     <Route path="/message-edit" element={<MessageEdit />} />
+                    <Route path="/styling-tool" element={<StylingTool />} />
                     <Route path="/signin" element={<SignIn />} />
                 </Routes>
             </Layout>

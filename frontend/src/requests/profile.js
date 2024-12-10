@@ -40,3 +40,15 @@ export const sendToChatGPT = async (payload) => {
     const response = await axiosInstance.post("/text-processing/chat-gpt/call/", payload);
     return response.data;
 };
+
+export const saveStyle = async (formData) => {
+    const response = await axiosInstance.post("/style_personalization/styles/save/", formData);
+    return response.data;
+};
+
+export const deleteStyle = async (styleId) => {
+    const response = await axiosInstance.delete("/style_personalization/styles/delete/", {
+        data: { style_id: styleId }
+    });
+    return response.data;
+};

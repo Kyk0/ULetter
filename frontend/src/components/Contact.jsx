@@ -29,7 +29,7 @@ const Contact = () => {
         padding: "20px",
       }}
     >
-      <div className="bg-background text-text max-w-4xl mx-auto p-8 rounded-lg shadow-lg border border-gray-200 mt-8">
+      <div className="bg-background text-text max-w-4xl mx-auto p-8 rounded-lg shadow-lg border border-gray-200 mt-8 font-mono">
         <h1 className="text-4xl font-bold text-center mb-6">Contact Us</h1>
 
         {/* Contact Information Section */}
