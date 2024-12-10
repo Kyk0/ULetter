@@ -135,7 +135,7 @@ const Profile = () => {
                 <div className="lg:w-1/3 bg-secondary/80 p-6 border-2 border-accent shadow-md rounded-md flex flex-col">
                     <div className="w-32 h-32 mx-auto bg-gray-200 rounded-full overflow-hidden border-2 border-primary">
                         <img
-                            src="https://via.placeholder.com/150"
+                            src="photo_2024-12-10_01-27-33.jpg"
                             alt="Placeholder"
                             className="w-full h-full object-cover"
                         />

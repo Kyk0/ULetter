@@ -106,3 +106,4 @@ class StyleSerializer(serializers.ModelSerializer):
             for question_data in questions_data:
                 StyleQuestions.objects.create(style=style, **question_data)
         return style
+

@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-!188kwe8j29)8po-gnh&**-3qj+_v(#lr$m&vye)le=4-6#3oc
 
 # turn it false to test api
 # turn true to run an admin panel
-DEBUG = False
+DEBUG = True
 
 # changed from blank so
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']

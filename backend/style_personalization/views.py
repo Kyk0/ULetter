@@ -1,6 +1,7 @@
 import random
 
 from django.db import transaction
+from django.shortcuts import get_list_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -13,17 +14,21 @@ from users.models import UserStats
 
 
 class QuestionView(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    VALID_CATEGORIES = ['formal', 'neutral', 'informal']
+
     def get(self, request):
         category = request.query_params.get('category')
 
-        if category not in ['formal', 'neutral', 'informal']:
+        if category not in self.VALID_CATEGORIES:
             return Response({'error': 'Invalid category'}, status=status.HTTP_400_BAD_REQUEST)
 
-        questions = QuestionList.objects.filter(category=category)
-        if not questions.exists():
-            return Response({'error': 'No questions found for the given category'}, status=status.HTTP_404_NOT_FOUND)
+        questions = get_list_or_404(QuestionList, category=category)
 
         random_questions = random.sample(list(questions), min(5, len(questions)))
+
         serializer = QuestionSerializer(random_questions, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -68,3 +73,12 @@ class DeleteStyleView(APIView):
             return Response({"error": "Style not found or not owned by the user."}, status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+class ListStylesView(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        styles = Style.objects.filter(user=request.user)
+        serializer = StyleSerializer(styles, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
