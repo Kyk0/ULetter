@@ -77,9 +77,7 @@ MIDDLEWARE = [
 
 # use all the time
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-]
+CORS_ALLOW_ALL_ORIGINS = True
 
 # use when you test api with postman or smth else,
 # or you may just add the another value to the CORS_ALLOWED_ORIGINS instead
