@@ -35,9 +35,13 @@ class StyleSerializer(serializers.ModelSerializer):
         ]
 
     def validate_name(self, value):
+        request = self.context.get('request')
+        user = request.user if request else None
         if not value or not value.strip():
             raise serializers.ValidationError("Name is required and cannot be empty.")
-        return value
+        if Style.objects.filter(name=value.strip(), user=user).exists():
+            raise serializers.ValidationError("A style with this name already exists.")
+        return value.strip()
 
     def validate_category(self, value):
         if value not in ['formal', 'neutral', 'informal']:
@@ -103,7 +107,7 @@ class StyleSerializer(serializers.ModelSerializer):
         user = self.context['request'].user
         with transaction.atomic():
             style = Style.objects.create(user=user, **validated_data)
-            for question_data in questions_data:
-                StyleQuestions.objects.create(style=style, **question_data)
+            StyleQuestions.objects.bulk_create([
+                StyleQuestions(style=style, **question_data) for question_data in questions_data
+            ])
         return style
-

@@ -53,18 +53,26 @@ class SaveStyleView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from django.db import transaction
+from .models import Style
+
 class DeleteStyleView(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def delete(self, request):
-        style_id = request.data.get('style_id')
-        if not style_id:
-            return Response({"error": "Style ID is required."}, status=status.HTTP_400_BAD_REQUEST)
+        style_name = request.data.get('name')
+        if not style_name:
+            return Response({"error": "Style name is required."}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
             with transaction.atomic():
-                style = Style.objects.get(id=style_id, user=request.user)
+                style = Style.objects.get(name=style_name, user=request.user)
 
                 style.delete()
 
