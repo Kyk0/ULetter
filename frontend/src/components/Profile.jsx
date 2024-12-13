@@ -1,18 +1,28 @@
 import React, { useEffect, useState } from "react";
-import { getUserProfile, getUserStats, getUserMessageHistory } from "../requests/profile";
+import {
+    getUserProfile,
+    getUserStats,
+    getUserMessageHistory,
+    getUserStyles
+} from "../requests/profile";
 import MessageHistoryModal from "./MessageHistoryModal";
 import EditProfileModal from "./EditProfileModal";
 import ChangePasswordModal from "./ChangePasswordModal";
+import StyleDetailsModal from "./StyleDetailsModal";
 
 const Profile = () => {
     const [profileData, setProfileData] = useState(null);
     const [statsData, setStatsData] = useState(null);
     const [messageHistory, setMessageHistory] = useState([]);
+    const [stylesData, setStylesData] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    const [uploadedPhoto, setUploadedPhoto] = useState(null); // State for the uploaded photo
+    const [uploadedPhoto, setUploadedPhoto] = useState(null);
+
     const [selectedMessage, setSelectedMessage] = useState(null);
     const [isMessageModalOpen, setIsMessageModalOpen] = useState(false);
+    const [selectedStyle, setSelectedStyle] = useState(null);
+    const [isStyleModalOpen, setIsStyleModalOpen] = useState(false);
     const [isEditProfileModalOpen, setIsEditProfileModalOpen] = useState(false);
     const [isChangePasswordModalOpen, setIsChangePasswordModalOpen] = useState(false);
 
@@ -26,13 +36,17 @@ const Profile = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const profile = await getUserProfile();
-                const stats = await getUserStats();
-                const messages = await getUserMessageHistory();
+                const [profile, stats, messages, styles] = await Promise.all([
+                    getUserProfile(),
+                    getUserStats(),
+                    getUserMessageHistory(),
+                    getUserStyles()
+                ]);
 
                 setProfileData(profile);
                 setStatsData(stats);
                 setMessageHistory(messages.message_history);
+                setStylesData(styles);
 
                 localStorage.setItem("profileData", JSON.stringify(profile));
             } catch (error) {
@@ -69,6 +83,16 @@ const Profile = () => {
         setIsMessageModalOpen(false);
     };
 
+    const openStyleModal = (style) => {
+        setSelectedStyle(style);
+        setIsStyleModalOpen(true);
+    };
+
+    const closeStyleModal = () => {
+        setSelectedStyle(null);
+        setIsStyleModalOpen(false);
+    };
+
     const openEditProfileModal = () => setIsEditProfileModalOpen(true);
     const closeEditProfileModal = () => setIsEditProfileModalOpen(false);
 
@@ -87,7 +111,7 @@ const Profile = () => {
     };
 
     const removePhoto = () => {
-        setUploadedPhoto(null); // Remove the uploaded photo
+        setUploadedPhoto(null);
     };
 
     const formatDate = (dateString) => {
@@ -103,12 +127,21 @@ const Profile = () => {
         return <p>Error loading profile or stats. Please try again later.</p>;
     }
 
+    // example how it works
+    // possibly implement with db in future versions
+    const displayedPhoto = uploadedPhoto || "photo_2024-12-08_05-48-59.jpg";
+
     return (
         <div className="min-h-screen bg-background flex flex-col items-center font-mono">
             <MessageHistoryModal
                 isOpen={isMessageModalOpen}
                 message={selectedMessage}
                 onClose={closeMessageModal}
+            />
+            <StyleDetailsModal
+                isOpen={isStyleModalOpen}
+                styleData={selectedStyle}
+                onClose={closeStyleModal}
             />
             <EditProfileModal
                 isOpen={isEditProfileModalOpen}
@@ -124,19 +157,11 @@ const Profile = () => {
             <main className="flex flex-col lg:flex-row mt-8 w-11/12 max-w-6xl">
                 <div className="lg:w-1/3 bg-secondary/80 p-6 border-2 border-accent shadow-md rounded-md flex flex-col">
                     <div className="relative w-32 h-32 mx-auto bg-gray-200 rounded-full overflow-hidden border-2 border-primary">
-                        {uploadedPhoto ? (
-                            <img
-                                src={uploadedPhoto}
-                                alt="Uploaded Profile"
-                                className="w-full h-full object-cover"
-                            />
-                        ) : (
-                            <img
-                                src="photo_2024-12-08_05-48-59.jpg"
-                                alt="Placeholder"
-                                className="w-full h-full object-cover"
-                            />
-                        )}
+                        <img
+                            src={displayedPhoto}
+                            alt="Profile"
+                            className="w-full h-full object-cover"
+                        />
                     </div>
                     <div className="mt-2 flex flex-col items-center">
                         <label
@@ -192,6 +217,10 @@ const Profile = () => {
                                 <span className="font-semibold">Styles Created:</span>{" "}
                                 {statsData.user_stats.styles_created}
                             </li>
+                            <li>
+                                <span className="font-semibold">Time Saved (minutes):</span>{" "}
+                                {statsData.user_stats.messages_generated * statsData.user_stats.styles_created}
+                            </li>
                         </ul>
                     </div>
                     <div className="mt-8 flex justify-around">
@@ -239,7 +268,23 @@ const Profile = () => {
                     <div className="bg-secondary/80 p-5 border-2 border-accent shadow-md rounded-md">
                         <h3 className="text-xl font-semibold text-text">Personalized Styles</h3>
                         <div className="mt-4 h-64 overflow-y-auto bg-gray-100 rounded p-2">
-                            <p className="text-text">No styles configured...</p>
+                            {stylesData.length === 0 ? (
+                                <p className="text-text">No styles configured...</p>
+                            ) : (
+                                <ul className="space-y-4">
+                                    {stylesData.map((style, index) => (
+                                        <li
+                                            key={index}
+                                            className="p-2 bg-white rounded shadow-md hover:bg-gray-200 cursor-pointer transition"
+                                            onClick={() => openStyleModal(style)}
+                                        >
+                                            <p>
+                                                <strong>Name:</strong> {style.name}
+                                            </p>
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
                         </div>
                     </div>
                 </div>

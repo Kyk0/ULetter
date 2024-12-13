@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getStyleQuestions, saveStyle } from "../requests/profile"; // External functions, not defined here.
+import { getStyleQuestions, saveStyle } from "../requests/profile";
 
 function StylingTool() {
     const [formData, setFormData] = useState({
@@ -23,21 +23,18 @@ function StylingTool() {
     const [errors, setErrors] = useState({});
     const [successMessage, setSuccessMessage] = useState("");
 
-    // Fetch 5 questions whenever category changes
     useEffect(() => {
         const fetchQuestions = async () => {
             setLoadingQuestions(true);
             setErrors({});
             try {
                 const qData = await getStyleQuestions(formData.category);
-                // Assume qData is an array of 5 questions: [{question: "?", id: ...}, ...]
                 setQuestionsFromBackend(qData);
-                // Map them into formData.questions structure
                 setFormData((prev) => ({
                     ...prev,
                     questions: qData.map((q) => ({
                         question: q.question,
-                        answer: "" // Empty at start
+                        answer: ""
                     }))
                 }));
             } catch (error) {
@@ -71,14 +68,10 @@ function StylingTool() {
         if (!formData.name.trim()) newErrors.name = "Name is required.";
         if (!formData.recipients.trim()) newErrors.recipients = "Recipients are required.";
 
-        // Validate category
         if (!['formal', 'neutral', 'informal'].includes(formData.category)) {
             newErrors.category = "Category must be formal, neutral, or informal.";
         }
 
-        // Validate boolean fields (slang, intentional_errors) not strictly necessary unless we want strict checks.
-
-        // Validate detail_level, tone, etc.
         const detailOptions = ['brief', 'moderate', 'elaborate'];
         if (!detailOptions.includes(formData.detail_level)) {
             newErrors.detail_level = "Detail Level must be brief, moderate, or elaborate.";
@@ -109,7 +102,6 @@ function StylingTool() {
             newErrors.message_type = "Message Type must be chat or email.";
         }
 
-        // Validate questions
         if (!formData.questions || formData.questions.length !== 5) {
             newErrors.questions = "Exactly five questions are required.";
         } else {
@@ -141,8 +133,6 @@ function StylingTool() {
         try {
             await saveStyle(formData);
             setSuccessMessage("Style created successfully!");
-            // Reset form after success if desired
-            // Keeping the category same and reloading questions might be odd, but let's clear for now:
             setFormData({
                 name: "",
                 category: "formal",
@@ -158,7 +148,6 @@ function StylingTool() {
                 questions: Array.from({ length: 5 }, () => ({ question: "", answer: "" }))
             });
         } catch (error) {
-            // Assume error.response.data for backend validation errors
             if (error.response && error.response.data) {
                 if (typeof error.response.data === 'object') {
                     setErrors(error.response.data);
