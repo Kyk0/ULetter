@@ -1,6 +1,25 @@
 import React from "react";
+import {deleteStyle} from "../requests/profile"
 
-const StyleDetailsModal = ({ isOpen, styleData, onClose }) => {
+const StyleDetailsModal = ({ isOpen, styleData, onClose, onDelete }) => {
+    const handleDelete = async () => {
+        try {
+            const response = await deleteStyle(styleData.name);
+
+            const styles = JSON.parse(localStorage.getItem("styles")) || [];
+            const updatedStyles = styles.filter((style) => style.name !== styleData.name);
+            localStorage.setItem("styles", JSON.stringify(updatedStyles));
+
+            alert(response.message || "Style deleted successfully");
+            onDelete(styleData.name);
+            onClose();
+        } catch (error) {
+            const errorMessage =
+                error.response?.data?.error || "Failed to delete style. Please try again.";
+            alert(errorMessage);
+        }
+    };
+
     if (!isOpen || !styleData) return null;
 
     return (
@@ -58,6 +77,20 @@ const StyleDetailsModal = ({ isOpen, styleData, onClose }) => {
                             </ul>
                         </div>
                     )}
+                </div>
+                <div className="mt-4 flex justify-end space-x-2">
+                    <button
+                        className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
+                        onClick={handleDelete}
+                    >
+                        Delete
+                    </button>
+                    <button
+                        className="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600"
+                        onClick={onClose}
+                    >
+                        Close
+                    </button>
                 </div>
             </div>
         </div>

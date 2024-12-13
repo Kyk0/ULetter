@@ -46,9 +46,9 @@ export const saveStyle = async (formData) => {
     return response.data;
 };
 
-export const deleteStyle = async (styleId) => {
+export const deleteStyle = async (styleName) => {
     const response = await axiosInstance.delete("/style_personalization/styles/delete/", {
-        data: { style_id: styleId }
+        data: { name: styleName }
     });
     return response.data;
 };
