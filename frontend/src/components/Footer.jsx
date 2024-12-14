@@ -5,12 +5,7 @@ import {
   faPhone,
   faMapMarkerAlt,
 } from "@fortawesome/free-solid-svg-icons";
-import {
-  faFacebook,
-  faTwitter,
-  faLinkedin,
-  faInstagram,
-} from "@fortawesome/free-brands-svg-icons";
+
 
 const Footer = () => {
   const handlePrintUserData = () => {
